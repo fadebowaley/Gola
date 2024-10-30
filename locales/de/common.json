@@ -1,0 +1,14 @@
+{
+  "freeCall": "Kostenloser Anruf",
+  "onlineSupport": "Online-Support",
+  "onlineLocation": "Online-Standort",
+  "loginOrRegister": "Anmelden oder Registrieren",
+  "welcome": "Welcome!",
+  "notifications": "Notifications",
+  "logout": "Logout",
+  "checkIn": "Einchecken",
+  "checkOut": "Auschecken",
+  "adult": "Erwachsener",
+  "child": "Kind",
+  "price": "Preis"
+}
