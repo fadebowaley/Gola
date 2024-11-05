@@ -1,0 +1,64 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main            # Trigger this workflow on push to main branch
+      - development      # Trigger this workflow on push to development branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: docker build -t your-docker-image .
+
+      - name: Push to Docker Hub
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker push your-docker-image
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to Staging
+        if: github.ref == 'refs/heads/development'  # Check if the push is to the development branch
+        run: |
+          ssh -o StrictHostKeyChecking=no ec2-user@staging.fadebowaley.xyz << 'EOF'
+            export MONGO_URI="${{ secrets.MONGO_URI }}"
+            export SESSION_SECRET="${{ secrets.SESSION_SECRET }}"
+            export MAIL_PASSWORD="${{ secrets.MAIL_PASSWORD }}"
+            export MAIL_USERNAME="${{ secrets.MAIL_USERNAME }}"
+            export MAIL_SERVER="${{ secrets.MAIL_SERVER }}"
+            export MAIL_PORT="${{ secrets.MAIL_PORT }}"
+            export ADMIN_EMAIL="${{ secrets.ADMIN_EMAIL }}"
+            export DEFAULT_SENDER="${{ secrets.DEFAULT_SENDER }}"
+            export ORDER_SENDER="${{ secrets.ORDER_SENDER }}"
+            export ACTIVATE_SENDER="${{ secrets.ACTIVATE_SENDER }}"
+            export FEEDBACK_EMAIL="${{ secrets.FEEDBACK_EMAIL }}"
+            docker pull your-docker-image
+            docker-compose up -d
+          EOF
+
+      - name: Deploy to Production
+        if: github.ref == 'refs/heads/main'  # Check if the push is to the main branch
+        run: |
+          ssh -o StrictHostKeyChecking=no ec2-user@fadebowaley.xyz << 'EOF'
+            export MONGO_URI="${{ secrets.MONGO_URI }}"
+            export SESSION_SECRET="${{ secrets.SESSION_SECRET }}"
+            export MAIL_PASSWORD="${{ secrets.MAIL_PASSWORD }}"
+            export MAIL_USERNAME="${{ secrets.MAIL_USERNAME }}"
+            export MAIL_SERVER="${{ secrets.MAIL_SERVER }}"
+            export MAIL_PORT="${{ secrets.MAIL_PORT }}"
+            export ADMIN_EMAIL="${{ secrets.ADMIN_EMAIL }}"
+            export DEFAULT_SENDER="${{ secrets.DEFAULT_SENDER }}"
+            export ORDER_SENDER="${{ secrets.ORDER_SENDER }}"
+            export ACTIVATE_SENDER="${{ secrets.ACTIVATE_SENDER }}"
+            export FEEDBACK_EMAIL="${{ secrets.FEEDBACK_EMAIL }}"
+            docker pull your-docker-image
+            docker-compose up -d
+          EOF

@@ -16,34 +16,6 @@ const fetchUserData = async (userID) => {
   }
 };
 
-const fetchUserShipping = async (userID) => {
-  try {
-    // Assuming `guest` is a Mongoose model or another database access layer
-    const shipping = await Guest.find({ user: userID });
-    return shipping; // Return the fetched shipping data
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-    throw error;
-  }
-};
-
-const shouldShowShippingAddress = async (order) => {
-  try {
-    const hasFoodOrMarket = await order.items.some((item) => {
-      return (
-        item.productType.includes("food") || item.productType.includes("market")
-      );
-    });
-    return !hasFoodOrMarket;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
-
-
-
 
 // set up transporter
 const transporter = nodemailer.createTransport({
@@ -55,6 +27,8 @@ const transporter = nodemailer.createTransport({
   host: process.env.MAIL_SERVER,
   port: process.env.MAIL_PORT,
 });
+
+
 
 //Email to send welcome message to users : immediately
 const sendWelcomeEmail = async (email, username) => {
@@ -77,6 +51,7 @@ const sendWelcomeEmail = async (email, username) => {
     return;
   }
 };
+
 
 //Email to send birthday messages to users on Birthday @ :00:00
 const sendBirthdayEmail = async (email, username) => {
@@ -130,7 +105,6 @@ const sendResetPasswordEmail = async (token, email, username) => {
       "../views/emails/emailPasswordReset.ejs"
     );
     const html = await ejs.renderFile(templatePath, { token, username });
-
     await transporter.sendMail({
       from: process.env.DEFAULT_SENDER,
       to: email,
@@ -153,8 +127,6 @@ const sendOrderCompletion = async (order) => {
 
     const { user } = order;
     const userData = await fetchUserData(user);
-    const shipping = await fetchUserShipping(user);
-    const showShippingAddress = shouldShowShippingAddress(order);
 
 
     const html = await ejs.renderFile(templatePath, {
@@ -187,7 +159,7 @@ const sendOrderCompletion = async (order) => {
 
 
 
-const sendContactFormEmail = async (name, email, phone, subject, message) => {
+const sendContactFormEmail = async (fullname, email, phone, subject,subjectSpec, message) => {
   try {
     // send mail with defined transport object
     await transporter.sendMail({
@@ -196,10 +168,11 @@ const sendContactFormEmail = async (name, email, phone, subject, message) => {
       subject: "New contact form submission",
       html: `
         <h3>New Equiry Form  Submission </h3>
-        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Name:</strong> ${fullname}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Email:</strong> ${phone}</p>
         <p><strong>Email:</strong> ${subject}</p>
+        <p><strong>Email:</strong> ${subjectSpec}</p>
         <p><strong>Message:</strong> ${message}</p>
       `,
     });
