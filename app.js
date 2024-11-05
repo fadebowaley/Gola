@@ -9,6 +9,7 @@ const pagesRoutes = require("./routes/pages");
 const adminRoutes = require("./routes/admin");
 const blogRoutes = require("./routes/blog");
 
+
 dotenv.config();
 
 const app = express();
@@ -28,6 +29,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 // Middleware
+app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 

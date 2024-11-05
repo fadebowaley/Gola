@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   app:
@@ -11,8 +10,11 @@ services:
       - .env  # Load environment variables from .env file
     volumes:
       - .:/app  # Mount the current directory to the container for live reloading
+      - /app/node_modules  # Ensures Docker uses container’s node_modules
     depends_on:
       - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/fadebowaley
 
   mongo:
     image: mongo:latest
@@ -20,9 +22,6 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=your_username  # Optional
-      - MONGO_INITDB_ROOT_PASSWORD=your_password  # Optional
-
+     
 volumes:
   mongo_data:
