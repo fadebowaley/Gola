@@ -6,16 +6,24 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    env_file:
-      - .env  # Load environment variables from .env file
+    environment:
+      MONGO_URI: "${MONGO_URI}"  # Set environment variables from secrets
+      SESSION_SECRET: "${SESSION_SECRET}"
+      MAIL_PASSWORD: "${MAIL_PASSWORD}"
+      MAIL_USERNAME: "${MAIL_USERNAME}"
+      MAIL_SERVER: "${MAIL_SERVER}"
+      MAIL_PORT: "${MAIL_PORT}"
+      ADMIN_EMAIL: "${ADMIN_EMAIL}"
+      DEFAULT_SENDER: "${DEFAULT_SENDER}"
+      ORDER_SENDER: "${ORDER_SENDER}"
+      ACTIVATE_SENDER: "${ACTIVATE_SENDER}"
+      FEEDBACK_EMAIL: "${FEEDBACK_EMAIL}"
+
     volumes:
       - .:/app  # Mount the current directory to the container for live reloading
       - /app/node_modules  # Ensures Docker uses container’s node_modules
     depends_on:
       - mongo
-    environment:
-      - MONGO_URI=mongodb://mongo:27017/fadebowaley
-
   mongo:
     image: mongo:latest
     ports:
