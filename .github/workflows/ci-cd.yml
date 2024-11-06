@@ -76,7 +76,8 @@ jobs:
             if [ ! -f "/home/ubuntu/proton/Dockerfile" ]; then
               scp -i ~/.ssh/id_rsa Dockerfile ubuntu@3.91.87.103:/home/ubuntu/proton
             fi
-          EOFrun: scp -i ~/.ssh/id_rsa Dockerfile ubuntu@3.91.87.103:/home/ubuntu/proton
+          EOF
+          
 
 
       - name: Deploy to Staging
