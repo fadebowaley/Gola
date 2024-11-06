@@ -49,12 +49,16 @@ jobs:
           ssh-keyscan -H 3.91.87.103 >> ~/.ssh/known_hosts
           ssh-keyscan -H 54.81.212.41 >> ~/.ssh/known_hosts
 
+
+      - name: Copy docker-compose.yml to EC2
+        run: scp -i ~/.ssh/id_rsa docker-compose.yml ubuntu@3.91.87.103:/home/ubuntu/
+
+
       - name: Deploy to Staging
         if: github.ref == 'refs/heads/development'
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@54.81.212.41 << 'EOF'
-            git clone https://github.com/fadebowaley/Gola.git /app
-            cd /app
+            cd /home/ubuntu
             export MONGO_URI="${{ secrets.MONGO_URI }}"
             export SESSION_SECRET="${{ secrets.SESSION_SECRET }}"
             export MAIL_PASSWORD="${{ secrets.MAIL_PASSWORD }}"
@@ -74,8 +78,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@3.91.87.103 << 'EOF'
-            git clone https://github.com/fadebowaley/Gola.git /app
-            cd /app
+            cd /home/ubuntu
             export MONGO_URI="${{ secrets.MONGO_URI }}"
             export SESSION_SECRET="${{ secrets.SESSION_SECRET }}"
             export MAIL_PASSWORD="${{ secrets.MAIL_PASSWORD }}"
