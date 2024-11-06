@@ -33,12 +33,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up SSH key for EC2
+      # - name: Set up SSH key for EC2
+      #   run: |
+      #     mkdir -p ~/.ssh
+      #     echo "${{ secrets.SSH_PRIVATE_DEPLOY }}" > ~/.ssh/id_rsa_proton
+      #     chmod 600 ~/.ssh/id_rsa_proton
+      #     ssh-keyscan -H 3.91.87.103  >> ~/.ssh/known_hosts
+      #     ssh-keyscan -H 54.81.212.41 >> ~/.ssh/known_hosts
+
+      - name: Set up PEM key for EC2
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa_proton
-          chmod 600 ~/.ssh/id_rsa_proton
-          ssh-keyscan -H 3.91.87.103  >> ~/.ssh/known_hosts
+          echo "${{ secrets.SSH_PRIVATE_DEPLOY }}" > ~/.ssh/id_rsa
+          chmod 400 ~/.ssh/id_rsa
+          ssh-keyscan -H 3.91.87.103 >> ~/.ssh/known_hosts
           ssh-keyscan -H 54.81.212.41 >> ~/.ssh/known_hosts
 
       - name: Deploy to Staging
