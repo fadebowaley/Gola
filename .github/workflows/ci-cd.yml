@@ -15,7 +15,7 @@ jobs:
 
 
       - name: Build Docker image
-        run: docker build -t fadebowaley/proton .
+        run: docker build -t fadebowaley/proton:latest .
 
       - name: Push to Docker Hub
         env:
@@ -23,7 +23,7 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-          docker push fadebowaley/proton
+          docker push fadebowaley/proton:latest
 
 
   deploy:
@@ -36,8 +36,8 @@ jobs:
       - name: Set up SSH key for EC2
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa_proton
+          chmod 600 ~/.ssh/id_rsa_proton
           ssh-keyscan -H 3.91.87.103  >> ~/.ssh/known_hosts
           ssh-keyscan -H 54.81.212.41 >> ~/.ssh/known_hosts
 
@@ -56,7 +56,7 @@ jobs:
             export ORDER_SENDER="${{ secrets.ORDER_SENDER }}"
             export ACTIVATE_SENDER="${{ secrets.ACTIVATE_SENDER }}"
             export FEEDBACK_EMAIL="${{ secrets.FEEDBACK_EMAIL }}"
-            docker pull your-docker-image
+            docker pull fadebowaley/proton:latest
             docker-compose up -d
           EOF
 
@@ -75,6 +75,6 @@ jobs:
             export ORDER_SENDER="${{ secrets.ORDER_SENDER }}"
             export ACTIVATE_SENDER="${{ secrets.ACTIVATE_SENDER }}"
             export FEEDBACK_EMAIL="${{ secrets.FEEDBACK_EMAIL }}"
-            docker pull your-docker-image
+            docker pull fadebowaley/proton:latest
             docker-compose up -d
           EOF
