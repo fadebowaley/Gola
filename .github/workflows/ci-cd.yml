@@ -53,6 +53,9 @@ jobs:
       - name: Copy docker-compose.yml to EC2
         run: scp -i ~/.ssh/id_rsa docker-compose.yml ubuntu@3.91.87.103:/home/ubuntu/
 
+      - name: Copy DockerFile to EC2
+        run: scp -i ~/.ssh/id_rsa Dockerfile ubuntu@3.91.87.103:/home/ubuntu/
+
 
       - name: Deploy to Staging
         if: github.ref == 'refs/heads/development'
