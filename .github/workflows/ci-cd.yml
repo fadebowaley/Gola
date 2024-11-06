@@ -33,13 +33,13 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H staging.fadebowaley.xyz >> ~/.ssh/known_hosts
-          ssh-keyscan -H fadebowaley.xyz >> ~/.ssh/known_hosts
+          ssh-keyscan -H 3.91.87.103  >> ~/.ssh/known_hosts
+          ssh-keyscan -H 54.81.212.41 >> ~/.ssh/known_hosts
 
       - name: Deploy to Staging
         if: github.ref == 'refs/heads/development'
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@staging.fadebowaley.xyz << 'EOF'
+          ssh -o StrictHostKeyChecking=no ubuntu@54.81.212.41 << 'EOF'
             export MONGO_URI="${{ secrets.MONGO_URI }}"
             export SESSION_SECRET="${{ secrets.SESSION_SECRET }}"
             export MAIL_PASSWORD="${{ secrets.MAIL_PASSWORD }}"
@@ -58,7 +58,7 @@ jobs:
       - name: Deploy to Production
         if: github.ref == 'refs/heads/main'
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@fadebowaley.xyz << 'EOF'
+          ssh -o StrictHostKeyChecking=no ubuntu@3.91.87.103 << 'EOF'
             export MONGO_URI="${{ secrets.MONGO_URI }}"
             export SESSION_SECRET="${{ secrets.SESSION_SECRET }}"
             export MAIL_PASSWORD="${{ secrets.MAIL_PASSWORD }}"
