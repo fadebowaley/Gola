@@ -53,6 +53,8 @@ jobs:
         if: github.ref == 'refs/heads/development'
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@54.81.212.41 << 'EOF'
+            git clone https://github.com/fadebowaley/Gola.git /app
+            cd /app
             export MONGO_URI="${{ secrets.MONGO_URI }}"
             export SESSION_SECRET="${{ secrets.SESSION_SECRET }}"
             export MAIL_PASSWORD="${{ secrets.MAIL_PASSWORD }}"
@@ -72,6 +74,8 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@3.91.87.103 << 'EOF'
+            git clone https://github.com/fadebowaley/Gola.git /app
+            cd /app
             export MONGO_URI="${{ secrets.MONGO_URI }}"
             export SESSION_SECRET="${{ secrets.SESSION_SECRET }}"
             export MAIL_PASSWORD="${{ secrets.MAIL_PASSWORD }}"
