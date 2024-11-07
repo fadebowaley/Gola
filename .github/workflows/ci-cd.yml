@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main            # Trigger this workflow on push to main branch
-      - development      # Trigger this workflow on push to development branch
+      - staging     # Trigger this workflow on push to staging branch
 
 jobs:
   build:
@@ -12,7 +12,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3   # Updated to v3
-
 
       - name: Build Docker image
         run: docker build -t fadebowaley/proton:latest .
@@ -24,7 +23,6 @@ jobs:
         run: |
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
           docker push fadebowaley/proton:latest
-
 
   deploy:
     runs-on: ubuntu-latest
@@ -43,37 +41,72 @@ jobs:
 
       - name: Ensure directory exists and clone repo if not present
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@fadebowaley.xyz << 'EOF'
-            # Create directory if it doesn't exist
-            if [ ! -d "/home/ubuntu/proton" ]; then
-              mkdir -p /home/ubuntu/proton
-              git clone https://github.com/fadebowaley/Gola.git /home/ubuntu/proton
-            else
-              cd /home/ubuntu/proton
-              git pull origin main
-            fi
-          EOF
+          # For Staging server (only when deploying to staging)
+          if [[ $GITHUB_REF == 'refs/heads/staging' ]]; then
+            ssh -o StrictHostKeyChecking=no ubuntu@staging.fadebowaley.xyz << 'EOF'
+              if [ ! -d "/home/ubuntu/proton" ]; then
+                mkdir -p /home/ubuntu/proton
+                git clone -b staging https://github.com/fadebowaley/Gola.git /home/ubuntu/proton  # Clone staging branch
+              else
+                cd /home/ubuntu/proton
+                git pull origin staging  # Pull latest staging changes
+              fi
+            EOF
+          fi
 
-      - name: Copy docker-compose.yml to EC2 if not exists
+          # For Production server (only when deploying to production)
+          if [[ $GITHUB_REF == 'refs/heads/main' ]]; then
+            ssh -o StrictHostKeyChecking=no ubuntu@fadebowaley.xyz << 'EOF'
+              if [ ! -d "/home/ubuntu/proton" ]; then
+                mkdir -p /home/ubuntu/proton
+                git clone -b main https://github.com/fadebowaley/Gola.git /home/ubuntu/proton  # Clone main branch
+              else
+                cd /home/ubuntu/proton
+                git pull origin main  # Pull latest main changes
+              fi
+            EOF
+          fi
+
+      - name: Copy necessary files to EC2 if not exists
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@fadebowaley.xyz << 'EOF'
-            if [ ! -f "/home/ubuntu/proton/docker-compose.yml" ]; then
-              scp -i ~/.ssh/id_rsa docker-compose.yml ubuntu@fadebowaley.xyz:/home/ubuntu/proton
-            fi
-          EOF
+          # Copy docker-compose.yml to Staging
+          if [[ $GITHUB_REF == 'refs/heads/staging' ]]; then
+            ssh -o StrictHostKeyChecking=no ubuntu@staging.fadebowaley.xyz << 'EOF'
+              if [ ! -f "/home/ubuntu/proton/docker-compose.yml" ]; then
+                scp -i ~/.ssh/id_rsa docker-compose.yml ubuntu@staging.fadebowaley.xyz:/home/ubuntu/proton
+              fi
+            EOF
+          fi
 
-      - name: Copy Dockerfile to EC2 if not exists
-        run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@fadebowaley.xyz << 'EOF'
-            if [ ! -f "/home/ubuntu/proton/Dockerfile" ]; then
-              scp -i ~/.ssh/id_rsa Dockerfile ubuntu@fadebowaley.xyz:/home/ubuntu/proton
-            fi
-          EOF
-          
+          # Copy docker-compose.yml to Production
+          if [[ $GITHUB_REF == 'refs/heads/main' ]]; then
+            ssh -o StrictHostKeyChecking=no ubuntu@fadebowaley.xyz << 'EOF'
+              if [ ! -f "/home/ubuntu/proton/docker-compose.yml" ]; then
+                scp -i ~/.ssh/id_rsa docker-compose.yml ubuntu@fadebowaley.xyz:/home/ubuntu/proton
+              fi
+            EOF
+          fi
 
+          # Copy Dockerfile to Staging
+          if [[ $GITHUB_REF == 'refs/heads/staging' ]]; then
+            ssh -o StrictHostKeyChecking=no ubuntu@staging.fadebowaley.xyz << 'EOF'
+              if [ ! -f "/home/ubuntu/proton/Dockerfile" ]; then
+                scp -i ~/.ssh/id_rsa Dockerfile ubuntu@staging.fadebowaley.xyz:/home/ubuntu/proton
+              fi
+            EOF
+          fi
+
+          # Copy Dockerfile to Production
+          if [[ $GITHUB_REF == 'refs/heads/main' ]]; then
+            ssh -o StrictHostKeyChecking=no ubuntu@fadebowaley.xyz << 'EOF'
+              if [ ! -f "/home/ubuntu/proton/Dockerfile" ]; then
+                scp -i ~/.ssh/id_rsa Dockerfile ubuntu@fadebowaley.xyz:/home/ubuntu/proton
+              fi
+            EOF
+          fi
 
       - name: Deploy to Staging
-        if: github.ref == 'refs/heads/development'
+        if: github.ref == 'refs/heads/staging'
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@staging.fadebowaley.xyz << 'EOF'
             cd /home/ubuntu/proton
