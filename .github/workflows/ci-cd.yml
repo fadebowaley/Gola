@@ -51,7 +51,7 @@ jobs:
                 cd /home/ubuntu/proton
                 git pull origin staging  # Pull latest staging changes
               fi
-            EOF
+          EOF
           fi
 
           # For Production server (only when deploying to production)
@@ -64,7 +64,7 @@ jobs:
                 cd /home/ubuntu/proton
                 git pull origin main  # Pull latest main changes
               fi
-            EOF
+          EOF
           fi
 
       - name: Copy necessary files to EC2 if not exists
@@ -75,7 +75,7 @@ jobs:
               if [ ! -f "/home/ubuntu/proton/docker-compose.yml" ]; then
                 scp -i ~/.ssh/id_rsa docker-compose.yml ubuntu@staging.fadebowaley.xyz:/home/ubuntu/proton
               fi
-            EOF
+          EOF
           fi
 
           # Copy docker-compose.yml to Production
@@ -84,7 +84,7 @@ jobs:
               if [ ! -f "/home/ubuntu/proton/docker-compose.yml" ]; then
                 scp -i ~/.ssh/id_rsa docker-compose.yml ubuntu@fadebowaley.xyz:/home/ubuntu/proton
               fi
-            EOF
+          EOF
           fi
 
           # Copy Dockerfile to Staging
@@ -93,7 +93,7 @@ jobs:
               if [ ! -f "/home/ubuntu/proton/Dockerfile" ]; then
                 scp -i ~/.ssh/id_rsa Dockerfile ubuntu@staging.fadebowaley.xyz:/home/ubuntu/proton
               fi
-            EOF
+          EOF
           fi
 
           # Copy Dockerfile to Production
@@ -102,7 +102,7 @@ jobs:
               if [ ! -f "/home/ubuntu/proton/Dockerfile" ]; then
                 scp -i ~/.ssh/id_rsa Dockerfile ubuntu@fadebowaley.xyz:/home/ubuntu/proton
               fi
-            EOF
+          EOF
           fi
 
       - name: Deploy to Staging
