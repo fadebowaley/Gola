@@ -9,6 +9,7 @@ const pagesRoutes = require("./routes/pages");
 const adminRoutes = require("./routes/admin");
 const blogRoutes = require("./routes/blog");
 
+
 dotenv.config();
 
 const app = express();
@@ -28,6 +29,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 // Middleware
+app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 
@@ -40,8 +42,7 @@ app.use("/admin", adminRoutes);
 app.use("/blog", blogRoutes);
 
 
-
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0',() => {
+  console.log(`Server running at http://0.0.0.0:${PORT}`);
 });

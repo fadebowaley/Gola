@@ -1,10 +1,5 @@
-
 //Verify Payment before sending data into the Background
-
-
-
-
-const { sendResetPasswordEmail, sendVerificationEmail, sendOrderCompletion } = require("../middleware/email");
+const { sendResetPasswordEmail, sendVerificationEmail, sendOrderCompletion, sendContactFormEmail } = require("../middleware/email");
 
 
 
@@ -18,6 +13,8 @@ const sendPasswordResetEmailInBackground = async (token, email) => {
 };
 
 
+
+
 const sendVerificationEmailInBackground = async (token, email, usernane) => {
   try {
    sendVerificationEmail(token, email, usernane);
@@ -26,6 +23,7 @@ const sendVerificationEmailInBackground = async (token, email, usernane) => {
     console.error("Error sending password reset email in background:", error);
   }
 };
+
 
 
 const sendOrderEmailInBackground = async ( order ) => {
@@ -37,9 +35,28 @@ const sendOrderEmailInBackground = async ( order ) => {
   }
 };
 
+const sendContacFormInBackground = async (
+  fullName,
+  email,
+  phone,
+  subject,
+  subjectSpec,
+  message
+) => {
+  try {
+    sendContactFormEmail(fullName, email, phone, subject, subjectSpec, message);
+    console.log("Message  Form sent in the background");
+  } catch (error) {
+    console.error("Error contact Form email in background:", error);
+  }
+};
+
+
+
 
 module.exports = {
   sendPasswordResetEmailInBackground,
   sendVerificationEmailInBackground,
   sendOrderEmailInBackground,
+  sendContacFormInBackground
 };

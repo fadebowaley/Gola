@@ -24,5 +24,75 @@
     <link rel="stylesheet" href="/css/lightbox.min.css" />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .sub-title{
+        margin-left: 3rem;
+      }
+
+      global-color .inner .global-color-option {
+    max-width: 600px;
+    width: 80%;
+    margin-left: auto;
+    height: 100%;
+    overflow-x: hidden;
+    margin-right: -400px;
+    background: rgb(25, 25, 25);
+    transition: 0.4s;
+    padding: 134px;
+}
+/* Initial hidden state for video overlay */
+.video-frame {
+  display: none; /* Hidden by default */
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Show overlay with entrance animation */
+.video-frame.show {
+  display: flex; /* Make it visible */
+  opacity: 1;
+  transform: scale(1);
+  animation: light-glow 2s infinite alternate ease-in-out; /* Light glow effect */
+}
+
+/* Light glow animation for video frame */
+@keyframes light-glow {
+  from {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+  to {
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+  }
+}
+
+/* Fade-out animation for exit */
+.video-frame.hide {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Close button styling */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #ffffffaa;
+  border: none;
+  font-size: 18px;
+  color: #333;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+}
+
+
+    </style>
   </head>
 </html>
