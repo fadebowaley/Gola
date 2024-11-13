@@ -40,37 +40,34 @@
     transition: 0.4s;
     padding: 134px;
 }
-/* Initial hidden state for video overlay */
+/* Adjusted styling for smaller video overlay */
 .video-frame {
   display: none; /* Hidden by default */
   opacity: 0;
   transform: scale(0.8);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8); /* Centered and scaled down */
+  transition: opacity 0.4s ease, transform 0.4s ease; /* Smooth transition */
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+  padding: 20px;
+  border-radius: 15px;
+  z-index: 1000;
 }
 
-/* Show overlay with entrance animation */
 .video-frame.show {
-  display: flex; /* Make it visible */
+  display: flex; /* Visible when .show is applied */
   opacity: 1;
-  transform: scale(1);
-  animation: light-glow 2s infinite alternate ease-in-out; /* Light glow effect */
+  transform: translate(-55%, -72%) scale(1); /* Scale up for zoom-out effect */
 }
 
-/* Light glow animation for video frame */
-@keyframes light-glow {
-  from {
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-  }
-  to {
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
-  }
-}
-
-/* Fade-out animation for exit */
-.video-frame.hide {
-  opacity: 0;
-  transform: scale(0.8);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+/* Video dimensions within the overlay */
+.video-frame .portfolio-video {
+  width: 90vw;
+  max-width: 700px;
+  height: auto;
+  
 }
 
 /* Close button styling */
@@ -90,6 +87,20 @@
   align-items: center;
   justify-content: center;
   z-index: 1001;
+}
+
+/* Play button styling */
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ff0404;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 50%;
+  padding: 10px 15px;
+  cursor: pointer;
 }
 
 

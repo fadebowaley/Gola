@@ -731,16 +731,16 @@ Throughout my career, I’ve had the opportunity to work across nine African cou
       </div>
 
       <div class="row portfolio-items">
-        <!-- Video Item 1 -->
+        <!-- Video Item 1 rcchospitality -->
         <div class="col-md-12 scroll-animation" data-animation="fade_from_bottom">
           <div class="portfolio-item portfolio-full">
             <div class="portfolio-item-inner video-gallery-item" data-video="assets/videos/portfolio1.mp4">
               <img src="/images/portfolio1b.jpg" alt="Portfolio" class="video-cover" />
-              <div class="play-button"></div>
+              <div class="play-button" onclick="toggleVideo()">▶</div>
               <div class="video-frame" style="display: none;">
-                <button class="close-button">✖</button>
+                <button class="close-button" onclick="toggleVideo()">✖</button>
                 <video class="portfolio-video" preload="none" controls>
-                  <source src="/images/portfolio1.mp4" type="video/mp4" />
+                  <source src="/images/video1.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -756,16 +756,17 @@ Throughout my career, I’ve had the opportunity to work across nine African cou
          </div>
         </div>
 
-        <!-- Video Item 2 -->
-        <div class="col-md-6 scroll-animation" data-animation="fade_from_left">
+      <!--video Item 2 Nodejs Plugin-->
+        <div class="col-md-12 scroll-animation" data-animation="fade_from_left">
           <div class="portfolio-item portfolio-half">
             <div class="portfolio-item-inner video-gallery-item" data-video="assets/videos/portfolio2.mp4">
               <img src="/images/portfolio2b.jpg" alt="Portfolio" class="video-cover" />
-              <div class="play-button"></div>
+              <!-- Play button outside of .video-frame for visibility -->
+              <div class="play-button" onclick="toggleVideo()">▶</div>
               <div class="video-frame" style="display: none;">
-                <button class="close-button">✖</button>
+                <button class="close-button" onclick="toggleVideo()">✖</button>
                 <video class="portfolio-video" preload="none" controls>
-                  <source src="/images/geocode.mp4" type="video/mp4" />
+                  <source src="/images/video2.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -775,24 +776,28 @@ Throughout my career, I’ve had the opportunity to work across nine African cou
                 <li><a href="#">Nodejs</a></li>
               </ul>
             </div>
-<h2><a href="https://www.npmjs.com/package/ngzipcode" target="_blank">Geocode Plugin</a></h2>
-<p>Node.js plugin for quick zip code detection across Nigeria, with automatic neighborhood zip code lookup—ideal for e-commerce and logistics.</p>
+            <h2><a href="https://www.npmjs.com/package/ngzipcode" target="_blank">Geocode Plugin</a></h2>
+            <p>Node.js plugin for quick zip code detection across Nigeria, with automatic neighborhood zip code lookup—ideal for e-commerce and logistics.</p>
           </div>
         </div>
 
-        <!-- Video Item 3 -->
-        <div class="col-md-6 scrollss-animation" data-animation="fade_from_right">
-          <div class="portfolio-item portfolio-half">
-            <div class="portfolio-item-inner video-gallery-item" data-video="assets/videos/portfolio3.mp4">
-              <img src="/images/portfolio3b.jpg" alt="Portfolio" class="video-cover" />
-              <div class="play-button"></div>
-              <div class="video-frame" style="display: none;">
-                <button class="close-button">✖</button>
-                <video class="portfolio-video" preload="none" controls>
-                  <source src="/images/video3.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              </div>
+      <!--image display - etoma -->
+            <div
+            class="col-md-6 scroll-animation"
+            data-animation="fade_from_left">
+            <div class="portfolio-item portfolio-half">
+            <div class="portfolio-item-inner">
+              <a
+                href="/images/portfolio3b.jpg"
+                data-lightbox="example-1">
+                <a
+                  href="/images/portfolio3b.jpg"
+                  alt="Portfolio" >
+              </a>
+
+              <img
+                src="/images/portfolio3b.jpg"
+                alt="Portfolio" />
               <ul class="portfolio-categories">
                 <li><a href="#">Artificial Intelligence</a></li>
                 <li><a href="#">TensorFlow</a></li>
@@ -800,8 +805,36 @@ Throughout my career, I’ve had the opportunity to work across nine African cou
             </div>
             <h2><a href="#">Etoma</a></h2>
             <p>Etoma is an Artificial Intelligence app using object detection to analyze movement and track objects, enhancing the overall building experience.</p>
-          </div>
-        </div>
+            </div>
+            </div>
+<!-- image display Health Tracker-->
+    <div
+            class="col-md-6 scroll-animation"
+            data-animation="fade_from_left">
+            <div class="portfolio-item portfolio-half">
+            <div class="portfolio-item-inner">
+              <a
+                href="/images/portfolio5b.jpg"
+                data-lightbox="example-1">
+                <a
+                  href="/images/portfolio5b.jpg"
+                  alt="Portfolio" >
+              </a>
+
+              <img
+                src="/images/portfolio5b.jpg"
+                alt="Portfolio" />
+            <ul class="portfolio-categories">
+                <li><a href="#">Python</a></li>
+                <li><a href="#">Kafka</a></li>
+                <li><a href="#">Spark</a></li>
+                <li><a href="#">Data Engineering</a></li>
+            </ul>
+            </div>
+            <h2><a href="https://github.com/fadebowaley/Data-pipeline-with-Kafka-and-Apache-Spark">HealthTrack Multi-Stream Kafka Application</a></h2>
+          <p>HealthTrack is a Python-based Kafka application for the healthcare industry.</p>
+            </div>
+            </div>
 
         <!-- Video Item 4 -->
         <div class="col-md-12 scroll-animation" data-animation="fade_from_bottom">
@@ -812,7 +845,7 @@ Throughout my career, I’ve had the opportunity to work across nine African cou
               <div class="video-frame" style="display: none;">
                 <button class="close-button">✖</button>
                 <video class="portfolio-video" preload="none" controls>
-                  <source src="/images/brvcase.mp4" type="video/mp4" />
+                  <source src="/images/video4.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -828,30 +861,7 @@ Throughout my career, I’ve had the opportunity to work across nine African cou
           </div>
         </div>
 
-        <!-- Video Item 5 -->
-        <div class="col-md-12 scroll-animation" data-animation="fade_from_bottom">
-          <div class="portfolio-item portfolio-half">
-            <div class="portfolio-item-inner video-gallery-item" data-video="assets/videos/portfolio5.mp4">
-              <img src="/images/portfolio5b.jpg" alt="Portfolio" class="video-cover" />
-              <div class="play-button"></div>
-              <div class="video-frame" style="display: none;">
-                <button class="close-button">✖</button>
-                <video class="portfolio-video" preload="none" controls>
-                  <source src="/images/video5.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-             <ul class="portfolio-categories">
-                <li><a href="#">Python</a></li>
-                <li><a href="#">Kafka</a></li>
-                <li><a href="#">Spark</a></li>
-                <li><a href="#">Data Engineering</a></li>
-            </ul>
-            </div>
-          <h2><a href="https://github.com/fadebowaley/Data-pipeline-with-Kafka-and-Apache-Spark">HealthTrack Multi-Stream Kafka Application</a></h2>
-          <p>HealthTrack is a Python-based Kafka application for the healthcare industry, enabling real-time data integration from multiple servers. It streamlines patient data management and enhances decision-making, ultimately improving patient care and operational efficiency.</p>
-          </div>
-        </div>
+
 
       </div>
     </div>
