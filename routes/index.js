@@ -64,23 +64,6 @@ router.post("/send-message", async (req, res, next) => {
   }
 });
 
-console.log("----------------------------------------------------"); // true or false
-console.log(ngZipCode.validateZipCode("101233")); // true or false
-const coords = ngZipCode.getCoordinates("234001");
-console.log(coords); // { lat: 6.5244, lng: 3.3792 }
-
-
-// const streets = ngZipCode.getStreetsByLocation({
-//   state: "Lagos",
-//   lga: "Lagos Mainland",
-// });
-// console.log(streets);
-
-console.log("----------------------------------------------------"); // true or false
-// const getStreetsByLocation = ({ state, lga, town, zipCode }) => {
-
-
-
 // Endpoint to fetch latest Medium articles for my medium article
 router.get('/api/blogs', async (req, res) => {
   try {
@@ -99,6 +82,9 @@ router.get('/api/blogs', async (req, res) => {
     res.status(500).json({ message: 'Error fetching Medium feed' });
   }
 });
+
+
+
 
 
 

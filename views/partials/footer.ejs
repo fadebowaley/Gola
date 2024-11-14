@@ -6,7 +6,6 @@
     <script src="/js/ScrollTrigger.min.js"></script>
     <script src="/js/ScrollToPlugin.min.js"></script>
     <script src="/js/lightbox.min.js"></script>
-
     <script src="/js/main.js"></script>
     <script src="/js/ajax-form.js"></script>
     <script src="/js/color.js"></script>
@@ -44,6 +43,10 @@ document.querySelectorAll('.video-gallery-item').forEach(item => {
   });
 });
 
+  function toggleVideo() {
+    const videoFrame = document.querySelector('.video-frame');
+    videoFrame.classList.toggle('show');
+  }
     </script>
   </body>
 
