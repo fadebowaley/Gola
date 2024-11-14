@@ -14,10 +14,129 @@
 
 
 <!--login/signup-->
-<!-- <p>"../partials/login"  insert the features-->
+<%- include ("../partials/login") %>
 
-<!--sidemenu bar-->
-<%- include ("../partials/sidebar-menu") %>
+
+    <div class="responsive-sidebar-menu">
+      <div class="overlay"></div>
+      <div class="sidebar-menu-inner">
+        <div class="menu-wrap">
+          <p>Menu</p>
+          <ul class="menu scroll-nav-responsive d-flex">
+            <li>
+              <a class="scroll-to" href="#home">
+                <i class="las la-home"></i> <span>Home</span>
+              </a>
+            </li>
+            <li>
+              <a class="scroll-to" href="#about">
+                <i class="lar la-user"></i> <span>About</span>
+              </a>
+            </li>
+            <li>
+              <a class="scroll-to" href="#resume">
+                <i class="las la-briefcase"></i> <span>Resume</span>
+              </a>
+            </li>
+            <li>
+              <a class="scroll-to" href="#services">
+                <i class="las la-stream"></i> <span>Services</span>
+              </a>
+            </li>
+            <li>
+              <a class="scroll-to" href="#skills">
+                <i class="las la-shapes"></i> <span>Skills</span>
+              </a>
+            </li>
+            <li>
+              <a class="scroll-to" href="#portfolio">
+                <i class="las la-grip-vertical"></i> <span>Portfolios</span>
+              </a>
+            </li>
+            <li>
+              <a class="scroll-to" href="#testimonial">
+                <i class="lar la-comment"></i> <span>Testimonial</span>
+              </a>
+            </li>
+            <li>
+              <a class="scroll-to" href="#contact-me">
+                <i class="las la-envelope"></i> <span>Contact</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sidebar-social">
+          <p>Social</p>
+          <ul class="social-links d-flex align-items-center">
+            <li>
+              <a href="https://x.com/fadebowaley" target="_blank"
+                ><i class="lab la-twitter"></i
+              ></a>
+            </li>
+            <li>
+              <a href="https://linkedin.com/in/fadebowaley" target="_blank"
+                ><i class="lab la-linkedin"></i
+              ></a>
+            </li>
+            <li>
+              <a href="https://medium.com/@fadebowaley" target="_blank"
+                ><i class="lab la-instagram"></i
+              ></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <ul class="menu scroll-nav d-flex">
+      <li>
+        <a class="scroll-to" href="#home">
+          <span>Home</span> <i class="las la-home"></i>
+        </a>
+      </li>
+      <li>
+        <a class="scroll-to" href="#about">
+          <span>About</span> <i class="lar la-user"></i>
+        </a>
+      </li>
+      <li>
+        <a class="scroll-to" href="#resume">
+          <span>Resume</span> <i class="las la-briefcase"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#services">
+          <span>Services</span> <i class="las la-stream"></i>
+        </a>
+      </li>
+      <li>
+        <a class="scroll-to" href="#skills">
+          <span>Skills</span> <i class="las la-shapes"></i>
+        </a>
+      </li>
+      <li>
+        <a class="scroll-to" href="#portfolio">
+          <span>Portfolios</span> <i class="las la-grip-vertical"></i>
+        </a>
+      </li>
+      <li>
+        <a class="scroll-to" href="#testimonial">
+          <span>Testimonial</span> <i class="lar la-comment"></i>
+        </a>
+      </li>
+       <li>
+        <a class="scroll-to" href="#blog">
+          <span>Blogs</span> <i class="las la-blog"></i>
+        </a>
+      </li>
+      <li>
+        <a class="scroll-to" href="#contact-me">
+          <span>Contact</span> <i class="las la-envelope"></i>
+        </a>
+      </li>
+    </ul>
+
 
     <%- include ("../partials/sidebar") %>
 
@@ -67,9 +186,32 @@
           <section class="hero-section page-section scroll-to-page" id="home">
             <div class="custom-container">
               <div class="hero-content content-width">
+                <div class="section-header">
+               <a href="#">
+                <h4 class="subtitle scroll-animation" data-animation="fade_from_bottom">
+                    <i class="las la-user"></i> Bio
+                </h4>
+            </a>
 
-               <%- include ("../partials/menu") %>
-
+            <a href="#">
+                <h4 class="subtitle scroll-animation" data-animation="fade_from_bottom">
+                    <i class="las la-camera"></i> Photos 
+                </h4>
+            </a>
+            <a href="#">
+                <h4 class="subtitle scroll-animation" data-animation="fade_from_bottom">
+                    <i class="las la-microphone"></i> Speaking Engagement
+                </h4>
+            </a>
+            <a href="#">
+                <h4 class="subtitle scroll-animation" data-animation="fade_from_bottom">
+                    <i class="las la-book"></i> Publications 
+                </h4>
+            </a>
+                <h1 class="scroll-animation" data-animation="fade_from_bottom">
+                   Welcome! I'm <span>Ademola</span> Adebowale
+                </h1>
+            </div>
                 <p class="scroll-animation" data-animation="fade_from_bottom">
                  I'm a Software Engineer and Research Scientist with expertise in web development, data engineering, and machine learning. Former CTO, passionate about building scalable, high-impact applications and pushing the boundaries of what technology can achieve
                 </p>
@@ -98,7 +240,6 @@
               </div>
             </div>
           </section>
-
 
           <section class="about-area page-section scroll-to-page" id="about">
             <div class="custom-container">
@@ -342,55 +483,50 @@ Throughout my career, I’ve had the opportunity to work across nine African cou
                       <p class="name">Python</p>
                     </div>
                   </div>
-                        <div
-                    class="col-md-3 scroll-animation"
-                    data-animation="fade_from_right">
-                    <div class="skill">
-                      <div class="skill-inner">
-                        <img src="/images/ruby.png" alt="React" width="40%"/>
-                        <h1 class="percent">85%</h1>
-                      </div>
-                      <p class="name">Ruby</p>
-                    </div>
-                  </div>
-  <div
-                    class="col-md-3 scroll-animation"
-                    data-animation="fade_from_bottom">
-                    <div class="skill">
-                      <div class="skill-inner">
-                        <img
-                          src="/images/rust.png"
-                          alt="Jira" width="40%"/>
-                        <h1 class="percent">75%</h1>
-                      </div>
-                      <p class="name">Rust </p>
-                    </div>
-      </div>
                   <div
                     class="col-md-3 scroll-animation"
                     data-animation="fade_from_bottom">
                     <div class="skill">
                       <div class="skill-inner">
                         <img src="/images/javascript.png" alt="Framer" width="40%"/>
-                        <h1 class="percent">95%</h1>
+                        <h1 class="percent">85%</h1>
                       </div>
                       <p class="name">Javascript</p>
                     </div>
                   </div>
-
-                  
-            
+                  <div
+                    class="col-md-3 scroll-animation"
+                    data-animation="fade_from_top">
+                    <div class="skill">
+                      <div class="skill-inner">
+                        <img src="/images/nodejs.png" alt="Webflow" width="40%"/>
+                        <h1 class="percent">90%</h1>
+                      </div>
+                      <p class="name">Nodejs</p>
+                    </div>
+                  </div>
+                  <div
+                    class="col-md-3 scroll-animation"
+                    data-animation="fade_from_right">
+                    <div class="skill">
+                      <div class="skill-inner">
+                        <img src="/images/react_2.png" alt="React" width="40%"/>
+                        <h1 class="percent">90%</h1>
+                      </div>
+                      <p class="name">React</p>
+                    </div>
+                  </div>
                   <div
                     class="col-md-3 scroll-animation"
                     data-animation="fade_from_left">
                     <div class="skill">
                       <div class="skill-inner">
                         <img
-                          src="/images/aws.png"
+                          src="/images/apache-hadoop.png"
                           alt="Apache-Cansadra" width="40%"/>
-                        <h1 class="percent">90%</h1>
+                        <h1 class="percent">80%</h1>
                       </div>
-                      <p class="name">Aws </p>
+                      <p class="name">Apache Hadoop</p>
                     </div>
                   </div>
 
@@ -400,7 +536,7 @@ Throughout my career, I’ve had the opportunity to work across nine African cou
                     <div class="skill">
                       <div class="skill-inner">
                         <img
-                          src="/images/gccloud.png"
+                          src="/images/google-cloud-platform.png"
                           alt="Jira" width="40%"/>
                         <h1 class="percent">85%</h1>
                       </div>
@@ -413,24 +549,26 @@ Throughout my career, I’ve had the opportunity to work across nine African cou
                     <div class="skill">
                       <div class="skill-inner">
                         <img
-                          src="/images/azure.png"
+                          src="/images/neo4j.png"
                           alt="Jira" width="40%"/>
-                        <h1 class="percent">80%</h1>
+                        <h1 class="percent">90%</h1>
                       </div>
-                      <p class="name">Azure </p>
+                      <p class="name">Neo4J </p>
                     </div>
       </div>
- <div
+   <div
                     class="col-md-3 scroll-animation"
-                    data-animation="fade_from_top">
+                    data-animation="fade_from_bottom">
                     <div class="skill">
                       <div class="skill-inner">
-                        <img src="/images/github.png" alt="Webflow" width="40%"/>
-                        <h1 class="percent">95%</h1>
+                        <img
+                          src="/images/aws-dynamodb.png"
+                          alt="Jira" width="40%"/>
+                        <h1 class="percent">85%</h1>
                       </div>
-                      <p class="name">GitHub</p>
+                      <p class="name">AWS DynamoDB </p>
                     </div>
-                  </div>
+      </div>
                 </div>
               </div>
             </div>
@@ -614,7 +752,7 @@ Throughout my career, I’ve had the opportunity to work across nine African cou
         <div class="col-md-12 scroll-animation" data-animation="fade_from_bottom">
           <div class="portfolio-item portfolio-full">
             <div class="portfolio-item-inner video-gallery-item" data-video="assets/videos/portfolio1.mp4">
-              <img src="/images/hospitality.png" alt="Portfolio" class="video-cover" />
+              <img src="/images/portfolio1b.jpg" alt="Portfolio" class="video-cover" />
               <div class="play-button" onclick="toggleVideo()">▶</div>
               <div class="video-frame" style="display: none;">
                 <button class="close-button" onclick="toggleVideo()">✖</button>
@@ -639,7 +777,7 @@ Throughout my career, I’ve had the opportunity to work across nine African cou
         <div class="col-md-12 scroll-animation" data-animation="fade_from_left">
           <div class="portfolio-item portfolio-half">
             <div class="portfolio-item-inner video-gallery-item" data-video="assets/videos/portfolio2.mp4">
-              <img src="/images/geocodeng.png" alt="Portfolio" class="video-cover" />
+              <img src="/images/portfolio2b.jpg" alt="Portfolio" class="video-cover" />
               <!-- Play button outside of .video-frame for visibility -->
               <div class="play-button" onclick="toggleVideo()">▶</div>
               <div class="video-frame" style="display: none;">
@@ -655,7 +793,7 @@ Throughout my career, I’ve had the opportunity to work across nine African cou
                 <li><a href="#">Nodejs</a></li>
               </ul>
             </div>
-            <h2><a href="https://www.npmjs.com/package/ngzipcode" target="_blank">NGZipcode Plugin</a></h2>
+            <h2><a href="https://www.npmjs.com/package/ngzipcode" target="_blank">Geocode Plugin</a></h2>
             <p>Node.js plugin for quick zip code detection across Nigeria, with automatic neighborhood zip code lookup—ideal for e-commerce and logistics.</p>
           </div>
         </div>
@@ -701,12 +839,13 @@ Throughout my career, I’ve had the opportunity to work across nine African cou
               </a>
 
               <img
-                src="/images/kafka.png"
+                src="/images/portfolio5b.jpg"
                 alt="Portfolio" />
             <ul class="portfolio-categories">
                 <li><a href="#">Python</a></li>
                 <li><a href="#">Kafka</a></li>
                 <li><a href="#">Spark</a></li>
+                <li><a href="#">Data Engineering</a></li>
             </ul>
             </div>
             <h2><a href="https://github.com/fadebowaley/Data-pipeline-with-Kafka-and-Apache-Spark">HealthTrack Multi-Stream Kafka Application</a></h2>
@@ -718,10 +857,10 @@ Throughout my career, I’ve had the opportunity to work across nine African cou
         <div class="col-md-12 scroll-animation" data-animation="fade_from_bottom">
           <div class="portfolio-item portfolio-half">
             <div class="portfolio-item-inner video-gallery-item" data-video="assets/videos/portfolio4.mp4">
-              <img src="/images/brvcaset.png" alt="Portfolio" class="video-cover" />
-                      <div class="play-button" onclick="toggleVideo()">▶</div>
+              <img src="/images/portfolio4b.jpg" alt="Portfolio" class="video-cover" />
+              <div class="play-button"></div>
               <div class="video-frame" style="display: none;">
-                <button class="close-button" onclick="toggleVideo()">✖</button>
+                <button class="close-button">✖</button>
                 <video class="portfolio-video" preload="none" controls>
                   <source src="/images/video4.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
