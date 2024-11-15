@@ -84,6 +84,47 @@ router.get('/api/blogs', async (req, res) => {
 });
 
 
+// Endpoint to render photo endpointss
+router.get('/photos', async (req, res) => {
+  try {
+    res.render("pages/photo");
+  } catch (error) {
+    console.error('Error fetching Medium feed:', error);
+    res.status(500).json({ message: 'Error fetching Medium feed' });
+  }
+});
+
+
+// Endpoint to render speakings  endpointss
+router.get('/speaking', async (req, res) => {
+  try {
+    res.render("pages/speaking");
+  } catch (error) {
+    console.error('Error fetching Medium feed:', error);
+    res.status(500).json({ message: 'Error fetching Medium feed' });
+  }
+});
+
+// Endpoint to render speakings  endpointss
+router.get("/bio", async (req, res) => {
+  try {
+    res.render("pages/bio");
+  } catch (error) {
+    console.error("Error fetching Medium feed:", error);
+    res.status(500).json({ message: "Error fetching Medium feed" });
+  }
+});
+
+// Endpoint to render speakings  endpointss
+router.get('/publications', async (req, res) => {
+  try {
+    res.render("pages/publications");
+  } catch (error) {
+    console.error('Error fetching Medium feed:', error);
+    res.status(500).json({ message: 'Error fetching Medium feed' });
+  }
+});
+
 
 
 
