@@ -36,14 +36,14 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_DEPLOY }}" > ~/.ssh/id_rsa
           chmod 400 ~/.ssh/id_rsa
-          ssh-keyscan -H fadebowaley.xyz >> ~/.ssh/known_hosts
-          ssh-keyscan -H staging.fadebowaley.xyz >> ~/.ssh/known_hosts
+          ssh-keyscan -H 20.169.202.219 >> ~/.ssh/known_hosts
+          ssh-keyscan -H 172.190.9.196 >> ~/.ssh/known_hosts
 
       - name: Ensure directory exists and clone repo if not present
         run: |
           # For Staging server (only when deploying to staging)
           if [[ $GITHUB_REF == 'refs/heads/staging' ]]; then
-            ssh -o StrictHostKeyChecking=no ubuntu@staging.fadebowaley.xyz << 'EOF'
+            ssh -o StrictHostKeyChecking=no ubuntu@172.190.9.196 << 'EOF'
               if [ ! -d "/home/ubuntu/proton" ]; then
                 mkdir -p /home/ubuntu/proton
                 git clone -b staging https://github.com/fadebowaley/Gola.git /home/ubuntu/proton  # Clone staging branch
@@ -56,7 +56,7 @@ jobs:
 
           # For Production server (only when deploying to production)
           if [[ $GITHUB_REF == 'refs/heads/main' ]]; then
-            ssh -o StrictHostKeyChecking=no ubuntu@fadebowaley.xyz << 'EOF'
+            ssh -o StrictHostKeyChecking=no ubuntu@20.169.202.219 << 'EOF'
               if [ ! -d "/home/ubuntu/proton" ]; then
                 mkdir -p /home/ubuntu/proton
                 git clone -b main https://github.com/fadebowaley/Gola.git /home/ubuntu/proton  # Clone main branch
@@ -71,36 +71,36 @@ jobs:
         run: |
           # Copy docker-compose.yml to Staging
           if [[ $GITHUB_REF == 'refs/heads/staging' ]]; then
-            ssh -o StrictHostKeyChecking=no ubuntu@staging.fadebowaley.xyz << 'EOF'
+            ssh -o StrictHostKeyChecking=no ubuntu@172.190.9.196 << 'EOF'
               if [ ! -f "/home/ubuntu/proton/docker-compose.yml" ]; then
-                scp -i ~/.ssh/id_rsa docker-compose.yml ubuntu@staging.fadebowaley.xyz:/home/ubuntu/proton
+                scp -i ~/.ssh/id_rsa docker-compose.yml ubuntu@172.190.9.196:/home/ubuntu/proton
               fi
           EOF
           fi
 
           # Copy docker-compose.yml to Production
           if [[ $GITHUB_REF == 'refs/heads/main' ]]; then
-            ssh -o StrictHostKeyChecking=no ubuntu@fadebowaley.xyz << 'EOF'
+            ssh -o StrictHostKeyChecking=no ubuntu@20.169.202.219 << 'EOF'
               if [ ! -f "/home/ubuntu/proton/docker-compose.yml" ]; then
-                scp -i ~/.ssh/id_rsa docker-compose.yml ubuntu@fadebowaley.xyz:/home/ubuntu/proton
+                scp -i ~/.ssh/id_rsa docker-compose.yml ubuntu@20.169.202.219:/home/ubuntu/proton
               fi
           EOF
           fi
 
           # Copy Dockerfile to Staging
           if [[ $GITHUB_REF == 'refs/heads/staging' ]]; then
-            ssh -o StrictHostKeyChecking=no ubuntu@staging.fadebowaley.xyz << 'EOF'
+            ssh -o StrictHostKeyChecking=no ubuntu@172.190.9.196 << 'EOF'
               if [ ! -f "/home/ubuntu/proton/Dockerfile" ]; then
-                scp -i ~/.ssh/id_rsa Dockerfile ubuntu@staging.fadebowaley.xyz:/home/ubuntu/proton
+                scp -i ~/.ssh/id_rsa Dockerfile ubuntu@172.190.9.196:/home/ubuntu/proton
               fi
           EOF
           fi
 
           # Copy Dockerfile to Production
           if [[ $GITHUB_REF == 'refs/heads/main' ]]; then
-            ssh -o StrictHostKeyChecking=no ubuntu@fadebowaley.xyz << 'EOF'
+            ssh -o StrictHostKeyChecking=no ubuntu@20.169.202.219 << 'EOF'
               if [ ! -f "/home/ubuntu/proton/Dockerfile" ]; then
-                scp -i ~/.ssh/id_rsa Dockerfile ubuntu@fadebowaley.xyz:/home/ubuntu/proton
+                scp -i ~/.ssh/id_rsa Dockerfile ubuntu@20.169.202.219:/home/ubuntu/proton
               fi
           EOF
           fi
@@ -108,7 +108,7 @@ jobs:
       - name: Deploy to Staging
         if: github.ref == 'refs/heads/staging'
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@staging.fadebowaley.xyz << 'EOF'
+          ssh -o StrictHostKeyChecking=no ubuntu@172.190.9.196 << 'EOF'
             cd /home/ubuntu/proton
             export MONGO_URI="${{ secrets.MONGO_URI }}"
             export SESSION_SECRET="${{ secrets.SESSION_SECRET }}"
@@ -128,7 +128,7 @@ jobs:
       - name: Deploy to Production
         if: github.ref == 'refs/heads/main'
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@fadebowaley.xyz << 'EOF'
+          ssh -o StrictHostKeyChecking=no ubuntu@20.169.202.219 << 'EOF'
             cd /home/ubuntu/proton
             export MONGO_URI="${{ secrets.MONGO_URI }}"
             export SESSION_SECRET="${{ secrets.SESSION_SECRET }}"
