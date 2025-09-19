@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful - Demola</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('../partials/header') %>
+    
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <i class="las la-check-circle" style="font-size: 4rem; color: #28a745;"></i>
+                        </div>
+                        <h2 class="text-success mb-3">Payment Successful!</h2>
+                        <p class="lead">Congratulations! You have successfully enrolled in the course.</p>
+                        
+                        <% if (typeof reference !== 'undefined') { %>
+                            <p><strong>Transaction Reference:</strong> <%= reference %></p>
+                        <% } %>
+                        
+                        <% if (typeof amount !== 'undefined') { %>
+                            <p><strong>Amount Paid:</strong> ₦<%= amount.toLocaleString() %></p>
+                        <% } %>
+                        
+                        <div class="mt-4">
+                            <a href="/user/dashboard" class="btn btn-primary btn-lg">Go to Dashboard</a>
+                            <a href="/learn" class="btn btn-outline-primary btn-lg ms-2">Browse More Courses</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn - Demola</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('../partials/header') %>
+    
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <h1 class="text-center mb-5">Learn with Demola</h1>
+                <p class="lead text-center mb-5">Master cutting-edge technologies through comprehensive courses, mentorship, and hands-on projects.</p>
+                
+                <!-- Featured Courses -->
+                <section class="mb-5">
+                    <h2 class="text-center mb-4">Featured Courses</h2>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">Complete Web Development Bootcamp</h5>
+                                    <p class="card-text">Master HTML, CSS, JavaScript, React, Node.js, and MongoDB in one comprehensive course.</p>
+                                    <ul class="list-unstyled">
+                                        <li>✓ 50+ hours of video content</li>
+                                        <li>✓ 20+ hands-on projects</li>
+                                        <li>✓ Lifetime access</li>
+                                        <li>✓ Certificate of completion</li>
+                                    </ul>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <span class="h4 text-primary">₦299,000</span>
+                                        <% if (user) { %>
+                                            <a href="/payment/enroll/web-dev" class="btn btn-primary">Enroll Now</a>
+                                        <% } else { %>
+                                            <a href="/user/register" class="btn btn-primary">Get Started</a>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">AWS Cloud Practitioner</h5>
+                                    <p class="card-text">Learn AWS fundamentals and prepare for the Cloud Practitioner certification.</p>
+                                    <ul class="list-unstyled">
+                                        <li>✓ 30+ hours of content</li>
+                                        <li>✓ Practice exams</li>
+                                        <li>✓ AWS hands-on labs</li>
+                                        <li>✓ Certification prep</li>
+                                    </ul>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <span class="h4 text-primary">₦199,000</span>
+                                        <% if (user) { %>
+                                            <a href="/payment/enroll/aws-cloud" class="btn btn-primary">Enroll Now</a>
+                                        <% } else { %>
+                                            <a href="/user/register" class="btn btn-primary">Get Started</a>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Mentorship Program -->
+                <section class="mb-5">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <h3>1-on-1 Mentorship Program</h3>
+                            <p class="lead">Get personalized guidance and accelerate your learning journey.</p>
+                            <ul class="list-unstyled">
+                                <li>✓ Weekly 1-on-1 sessions</li>
+                                <li>✓ Career guidance and portfolio review</li>
+                                <li>✓ Project feedback and code reviews</li>
+                                <li>✓ Industry insights and networking</li>
+                            </ul>
+                            <div class="mt-4">
+                                <span class="h3 text-primary">₦150,000/month</span>
+                                <% if (user) { %>
+                                    <a href="/payment/enroll/mentorship" class="btn btn-success btn-lg ms-3">Start Mentorship</a>
+                                <% } else { %>
+                                    <a href="/user/register" class="btn btn-success btn-lg ms-3">Get Started</a>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Books Section -->
+                <section class="mb-5">
+                    <h2 class="text-center mb-4">Recommended Books</h2>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h5>Clean Code</h5>
+                                    <p>by Robert C. Martin</p>
+                                    <span class="h5 text-primary">₦29,999</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h5>System Design Interview</h5>
+                                    <p>by Alex Xu</p>
+                                    <span class="h5 text-primary">₦39,999</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h5>JavaScript: The Good Parts</h5>
+                                    <p>by Douglas Crockford</p>
+                                    <span class="h5 text-primary">₦24,999</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Call to Action -->
+                <div class="text-center mt-5">
+                    <h3>Ready to Start Learning?</h3>
+                    <p>Join thousands of students who have transformed their careers with our courses.</p>
+                    <% if (user) { %>
+                        <a href="/user/dashboard" class="btn btn-primary btn-lg">Go to Dashboard</a>
+                    <% } else { %>
+                        <a href="/user/register" class="btn btn-primary btn-lg">Get Started Free</a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>

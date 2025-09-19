@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Failed - Demola</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('../partials/header') %>
+    
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <i class="las la-times-circle" style="font-size: 4rem; color: #dc3545;"></i>
+                        </div>
+                        <h2 class="text-danger mb-3">Payment Failed</h2>
+                        <p class="lead">Sorry, your payment could not be processed.</p>
+                        
+                        <% if (typeof error !== 'undefined') { %>
+                            <p class="text-muted"><%= error %></p>
+                        <% } %>
+                        
+                        <div class="mt-4">
+                            <a href="/learn" class="btn btn-primary btn-lg">Try Again</a>
+                            <a href="/ask" class="btn btn-outline-primary btn-lg ms-2">Contact Support</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>

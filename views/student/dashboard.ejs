@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Demola</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('../partials/header') %>
+    
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="mb-4">Welcome back, <%= user.firstname %>!</h1>
+                
+                <!-- Quick Stats -->
+                <div class="row mb-5">
+                    <div class="col-md-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">Enrolled Courses</h5>
+                                <h2 class="text-primary"><%= user.coursesEnrolled ? user.coursesEnrolled.length : 0 %></h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">Completed</h5>
+                                <h2 class="text-success">0</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">In Progress</h5>
+                                <h2 class="text-warning">0</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">Certificates</h5>
+                                <h2 class="text-info">0</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- My Courses -->
+                <section class="mb-5">
+                    <h2>My Courses</h2>
+                    <% if (user.coursesEnrolled && user.coursesEnrolled.length > 0) { %>
+                        <div class="row">
+                            <% user.coursesEnrolled.forEach(course => { %>
+                                <div class="col-md-4 mb-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><%= course.title || 'Course Title' %></h5>
+                                            <p class="card-text"><%= course.description || 'Course description' %></p>
+                                            <div class="progress mb-3">
+                                                <div class="progress-bar" style="width: 0%"></div>
+                                            </div>
+                                            <a href="#" class="btn btn-primary">Continue Learning</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        </div>
+                    <% } else { %>
+                        <div class="alert alert-info">
+                            <h4>No courses enrolled yet</h4>
+                            <p>Start your learning journey by enrolling in one of our courses!</p>
+                            <a href="/learn" class="btn btn-primary">Browse Courses</a>
+                        </div>
+                    <% } %>
+                </section>
+
+                <!-- Community Section -->
+                <section class="mb-5">
+                    <h2>Community</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Upcoming Events</h5>
+                                    <ul class="list-unstyled">
+                                        <li>📅 Weekly Q&A Session - Tomorrow 7 PM</li>
+                                        <li>📅 Code Review Workshop - Friday 6 PM</li>
+                                        <li>📅 Career Guidance Session - Next Monday</li>
+                                    </ul>
+                                    <a href="#" class="btn btn-outline-primary">View All Events</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Recent Discussions</h5>
+                                    <ul class="list-unstyled">
+                                        <li>�� "Best practices for React hooks" - 2 hours ago</li>
+                                        <li>💬 "AWS deployment strategies" - 1 day ago</li>
+                                        <li>💬 "Database optimization tips" - 2 days ago</li>
+                                    </ul>
+                                    <a href="#" class="btn btn-outline-primary">Join Discussion</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Quick Actions -->
+                <section class="mb-5">
+                    <h2>Quick Actions</h2>
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <a href="/learn" class="btn btn-outline-primary w-100">Browse Courses</a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="/ask" class="btn btn-outline-success w-100">Ask Question</a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="/user/profile" class="btn btn-outline-info w-100">Update Profile</a>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <a href="#" class="btn btn-outline-warning w-100">Schedule Mentorship</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+</body>
+</html>

@@ -24,75 +24,49 @@
     <link rel="stylesheet" href="/css/lightbox.min.css" />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
-    <style>
-      .sub-title{
-        margin-left: 3rem;
-      }
-
-      global-color .inner .global-color-option {
-    max-width: 600px;
-    width: 80%;
-    margin-left: auto;
-    height: 100%;
-    overflow-x: hidden;
-    margin-right: -400px;
-    background: rgb(25, 25, 25);
-    transition: 0.4s;
-    padding: 134px;
-}
-/* Initial hidden state for video overlay */
-.video-frame {
-  display: none; /* Hidden by default */
-  opacity: 0;
-  transform: scale(0.8);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-/* Show overlay with entrance animation */
-.video-frame.show {
-  display: flex; /* Make it visible */
-  opacity: 1;
-  transform: scale(1);
-  animation: light-glow 2s infinite alternate ease-in-out; /* Light glow effect */
-}
-
-/* Light glow animation for video frame */
-@keyframes light-glow {
-  from {
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-  }
-  to {
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
-  }
-}
-
-/* Fade-out animation for exit */
-.video-frame.hide {
-  opacity: 0;
-  transform: scale(0.8);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-/* Close button styling */
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: #ffffffaa;
-  border: none;
-  font-size: 18px;
-  color: #333;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1001;
-}
-
-
-    </style>
   </head>
-</html>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="header-inner">
+              <div class="logo">
+                <a href="/">
+                  <img src="/images/logo.png" alt="Demola" />
+                </a>
+              </div>
+              <div class="header-right">
+                <nav class="main-menu">
+                  <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/learn">Learn</a></li>
+                    <li><a href="/ask">Ask</a></li>
+                    <% if (user) { %>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+                          <%= user.firstname %> <i class="las la-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a href="/user/dashboard">Dashboard</a></li>
+                          <li><a href="/user/profile">Profile</a></li>
+                          <li><a href="/user/logout">Logout</a></li>
+                        </ul>
+                      </li>
+                    <% } else { %>
+                      <li><a href="/user/login" class="btn btn-primary">Login</a></li>
+                      <li><a href="/user/register" class="btn btn-outline-primary">Register</a></li>
+                    <% } %>
+                  </ul>
+                </nav>
+                <div class="header-btn">
+                  <a href="/learn" class="btn btn-primary">Get Started</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
