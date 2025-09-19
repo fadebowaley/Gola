@@ -36,8 +36,8 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_DEPLOY }}" > ~/.ssh/id_rsa
           chmod 400 ~/.ssh/id_rsa
-          ssh-keyscan -H fadebowaley.xyz >> ~/.ssh/known_hosts
-          ssh-keyscan -H staging.fadebowaley.xyz >> ~/.ssh/known_hosts
+          ssh-keyscan -H 20.169.202.219 >> ~/.ssh/known_hosts
+          ssh-keyscan -H 172.190.9.196 >> ~/.ssh/known_hosts
 
       - name: Ensure directory exists and clone repo if not present
         run: |
