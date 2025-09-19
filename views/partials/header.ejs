@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demola - Building Technologies that scales</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+
+    <!-- Font -->
+    <link rel="preconnect" href="/fonts.googleapis.com/index.html" />
+    <link rel="preconnect" href="/fonts.gstatic.com/index.html" crossorigin />
+    <link
+      href="/fonts.googleapis.com/css2c948.css?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+      rel="stylesheet" />
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/css/line-awesome.min.css" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="/css/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="/css/animate.min.css" />
+    <link rel="stylesheet" href="/css/smooth-scrollbar.css" />
+    <link rel="stylesheet" href="/css/lightbox.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <style>
+      .sub-title{
+        margin-left: 3rem;
+      }
+
+      global-color .inner .global-color-option {
+    max-width: 600px;
+    width: 80%;
+    margin-left: auto;
+    height: 100%;
+    overflow-x: hidden;
+    margin-right: -400px;
+    background: rgb(25, 25, 25);
+    transition: 0.4s;
+    padding: 134px;
+}
+/* Initial hidden state for video overlay */
+.video-frame {
+  display: none; /* Hidden by default */
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Show overlay with entrance animation */
+.video-frame.show {
+  display: flex; /* Make it visible */
+  opacity: 1;
+  transform: scale(1);
+  animation: light-glow 2s infinite alternate ease-in-out; /* Light glow effect */
+}
+
+/* Light glow animation for video frame */
+@keyframes light-glow {
+  from {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+  to {
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+  }
+}
+
+/* Fade-out animation for exit */
+.video-frame.hide {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Close button styling */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #ffffffaa;
+  border: none;
+  font-size: 18px;
+  color: #333;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+}
+
+
+    </style>
+  </head>
+</html>

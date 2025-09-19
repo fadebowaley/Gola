@@ -1,0 +1,50 @@
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/owl.carousel.js"></script>
+    <script src="/js/gsap.min.js"></script>
+    <script src="/js/ScrollTrigger.min.js"></script>
+    <script src="/js/ScrollToPlugin.min.js"></script>
+    <script src="/js/lightbox.min.js"></script>
+
+    <script src="/js/main.js"></script>
+    <script src="/js/ajax-form.js"></script>
+    <script src="/js/color.js"></script>
+
+<script>
+
+document.querySelectorAll('.video-gallery-item').forEach(item => {
+  const videoCover = item.querySelector('.video-cover');
+  const videoFrame = item.querySelector('.video-frame');
+  const video = item.querySelector('.portfolio-video');
+  const closeButton = item.querySelector('.close-button');
+
+  // Show video overlay with animation and play video on click
+  item.addEventListener('click', function() {
+    videoCover.style.display = 'none';
+    videoFrame.classList.remove('hide'); // Remove hide class if present
+    videoFrame.classList.add('show'); // Add show class to trigger entrance
+    videoFrame.style.display = 'flex'; // Make visible
+    video.play();
+  });
+
+  // Close video overlay with exit animation on close button click
+  closeButton.addEventListener('click', function(event) {
+    event.stopPropagation(); // Prevent triggering the parent click event
+    video.pause();
+    video.currentTime = 0;
+    videoFrame.classList.remove('show'); // Remove entrance animation
+    videoFrame.classList.add('hide'); // Add exit animation
+
+    // Hide overlay after animation ends
+    setTimeout(() => {
+      videoFrame.style.display = 'none';
+      videoCover.style.display = 'block';
+    }, 400); // Match this duration with CSS transition time (0.4s)
+  });
+});
+
+    </script>
+  </body>
+
+</html>
