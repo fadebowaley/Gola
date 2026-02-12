@@ -48,6 +48,16 @@ const userSchema = Schema({
     enum: ["subscriber", "student", "admin", "owner"],
     default: "subscriber",
   },
+  authProvider: {
+    type: String,
+    enum: ["local", "google"],
+    default: "local",
+  },
+  googleId: {
+    type: String,
+    index: true,
+    sparse: true,
+  },
   password: {
     type: String,
     required: function () {
@@ -139,4 +149,4 @@ userSchema.methods.getGravatar = function (size = 200) {
   return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=mp`; // You can change 'identicon' to another default image option
 };
 
-module.exports = conn.model("User", userSchema);
+module.exports = conn.models.User || conn.model("User", userSchema);

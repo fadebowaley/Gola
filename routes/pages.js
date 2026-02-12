@@ -1,19 +1,10 @@
-// routes/index.js
 const express = require("express");
+const platformController = require("../controllers/platform.controller");
+const { isLoggedIn, emailVerified } = require("../middleware/confirm");
+
 const router = express.Router();
-const Item = require("../models/item"); // Import the Item model
 
-// Home route
-router.get("/", async (req, res) => {
-  try {
-    const items = await Item.find();
-    res.render("pages/index", { items });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Server Error");
-  }
-});
-
-
+router.get("/learn", isLoggedIn, emailVerified, platformController.renderLearn);
+router.get("/courses", isLoggedIn, emailVerified, platformController.renderCourses);
 
 module.exports = router;

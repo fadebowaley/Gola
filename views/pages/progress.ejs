@@ -1,0 +1,47 @@
+<%- include("../partials/lms-layout-start", { lmsPageTitle, lmsActive }) %>
+
+<section class="lms-section">
+  <h2>Progress Analytics</h2>
+  <div class="lms-grid cols-3">
+    <article class="lms-card">
+      <div class="metric">86%</div>
+      <p class="muted">Attendance consistency</p>
+    </article>
+    <article class="lms-card">
+      <div class="metric">74%</div>
+      <p class="muted">Assessment average</p>
+    </article>
+    <article class="lms-card">
+      <div class="metric">41h</div>
+      <p class="muted">Learning hours this month</p>
+    </article>
+  </div>
+</section>
+
+<section class="lms-section">
+  <h2>Competency Matrix</h2>
+  <div class="lms-grid cols-2">
+    <article class="lms-card">
+      <h4>Backend Architecture</h4>
+      <div class="progress-track"><div class="progress-value" style="width: 81%"></div></div>
+      <p class="muted mt-2">81% mastery</p>
+    </article>
+    <article class="lms-card">
+      <h4>Cloud Fundamentals</h4>
+      <div class="progress-track"><div class="progress-value" style="width: 58%"></div></div>
+      <p class="muted mt-2">58% mastery</p>
+    </article>
+    <article class="lms-card">
+      <h4>System Design</h4>
+      <div class="progress-track"><div class="progress-value" style="width: 63%"></div></div>
+      <p class="muted mt-2">63% mastery</p>
+    </article>
+    <article class="lms-card">
+      <h4>Testing Discipline</h4>
+      <div class="progress-track"><div class="progress-value" style="width: 69%"></div></div>
+      <p class="muted mt-2">69% mastery</p>
+    </article>
+  </div>
+</section>
+
+<%- include("../partials/lms-layout-end") %>

@@ -1,0 +1,14 @@
+<%- include("../partials/lms-layout-start", { lmsPageTitle, lmsActive }) %>
+
+<section class="lms-section">
+  <h2>403 - Admin Access Required</h2>
+  <p class="muted">
+    You are logged in, but your current role does not permit access to this admin workspace.
+  </p>
+  <div class="lms-actions mt-3">
+    <a class="lms-btn primary" href="/user/dashboard"><i class="las la-columns"></i> Return to Dashboard</a>
+    <a class="lms-btn" href="/ask"><i class="las la-envelope"></i> Request Role Review</a>
+  </div>
+</section>
+
+<%- include("../partials/lms-layout-end") %>

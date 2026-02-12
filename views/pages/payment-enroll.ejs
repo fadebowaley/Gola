@@ -1,0 +1,55 @@
+<%- include("../partials/lms-layout-start", { lmsPageTitle, lmsActive }) %>
+
+<section class="lms-section">
+  <h2>Enrollment Checkout</h2>
+  <div class="lms-grid cols-2">
+    <article class="lms-card">
+      <h4><%= product.title %></h4>
+      <p class="muted">Product code: <code><%= productSlug %></code></p>
+      <p><strong>Price:</strong> <%= product.price %></p>
+      <p><strong>Duration:</strong> <%= product.duration %></p>
+      <p><strong>Level:</strong> <%= product.level %></p>
+      <span class="status-chip warn">Checkout setup in progress</span>
+    </article>
+    <article class="lms-card">
+      <h4>Expected Outcomes</h4>
+      <ul class="mb-0">
+        <% product.outcomes.forEach(function(item) { %>
+          <li><%= item %></li>
+        <% }) %>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<section class="lms-section">
+  <h2>Payment Flow Status</h2>
+  <div class="lms-grid cols-3">
+    <article class="lms-card">
+      <h4>Route Protection</h4>
+      <p class="muted">Authenticated + verified access is active.</p>
+      <span class="status-chip good">Complete</span>
+    </article>
+    <article class="lms-card">
+      <h4>Paystack Checkout</h4>
+      <p class="muted">Checkout initialization and callback persistence pending.</p>
+      <span class="status-chip warn">In Progress</span>
+    </article>
+    <article class="lms-card">
+      <h4>Enrollment Confirmation</h4>
+      <p class="muted">Automatic course unlock after successful payment.</p>
+      <span class="status-chip">Next</span>
+    </article>
+  </div>
+</section>
+
+<section class="lms-section">
+  <h2>Actions</h2>
+  <div class="lms-actions">
+    <a class="lms-btn" href="/courses"><i class="las la-arrow-left"></i> Back to Courses</a>
+    <a class="lms-btn" href="/user/billing"><i class="las la-wallet"></i> Billing Overview</a>
+    <a class="lms-btn primary" href="/ask"><i class="las la-envelope"></i> Request Manual Enrollment</a>
+  </div>
+</section>
+
+<%- include("../partials/lms-layout-end") %>

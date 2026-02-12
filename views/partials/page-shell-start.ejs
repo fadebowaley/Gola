@@ -1,0 +1,82 @@
+<%
+const active = typeof activePage !== "undefined" ? activePage : "";
+const navItems = [
+  { key: "home", href: "/", icon: "las la-home", label: "Home" },
+  { key: "about", href: "/about", icon: "lar la-user", label: "About" },
+  { key: "ask", href: "/ask", icon: "las la-question-circle", label: "Ask" },
+  { key: "learn", href: "/learn", icon: "las la-graduation-cap", label: "Learn" },
+  { key: "courses", href: "/courses", icon: "las la-book-open", label: "Courses" }
+];
+
+if (user) {
+  if (["admin", "owner"].includes(user.role)) {
+    navItems.push({ key: "admin", href: "/admin", icon: "las la-user-shield", label: "Admin" });
+  }
+  navItems.push(
+    { key: "dashboard", href: "/user/dashboard", icon: "las la-columns", label: "Dashboard" },
+    { key: "logout", href: "/user/logout", icon: "las la-sign-out-alt", label: "Logout" }
+  );
+} else {
+  navItems.push({ key: "login", href: "/user/login", icon: "las la-sign-in-alt", label: "Login" });
+}
+%>
+
+<body class="home6-page inner-page">
+  <div class="page-loader">
+    <div class="bounceball"></div>
+  </div>
+
+  <span class="icon-menu">
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </span>
+
+  <div class="responsive-sidebar-menu">
+    <div class="overlay"></div>
+    <div class="sidebar-menu-inner">
+      <div class="menu-wrap">
+        <p>Menu</p>
+        <ul class="menu scroll-nav-responsive d-flex">
+          <% navItems.forEach(function(item) { %>
+            <li>
+              <a class="scroll-to <%= active === item.key ? "active" : "" %>" href="<%= item.href %>">
+                <i class="<%= item.icon %>"></i> <span><%= item.label %></span>
+              </a>
+            </li>
+          <% }); %>
+        </ul>
+      </div>
+
+      <div class="sidebar-social">
+        <p>Social</p>
+        <ul class="social-links d-flex align-items-center">
+          <li>
+            <a href="https://x.com/fadebowaley" target="_blank" rel="noreferrer"><i class="lab la-twitter"></i></a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/fadebowaley" target="_blank" rel="noreferrer"><i class="lab la-linkedin"></i></a>
+          </li>
+          <li>
+            <a href="https://github.com/fadebowaley" target="_blank" rel="noreferrer"><i class="lab la-github"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <ul class="menu scroll-nav d-flex">
+    <% navItems.forEach(function(item) { %>
+      <li>
+        <a class="scroll-to <%= active === item.key ? "active" : "" %>" href="<%= item.href %>">
+          <span><%= item.label %></span> <i class="<%= item.icon %>"></i>
+        </a>
+      </li>
+    <% }); %>
+  </ul>
+
+  <%- include("../partials/sidebar", { activePage: active }) %>
+
+  <main class="drake-main">
+    <div id="smooth-wrapper">
+      <div id="smooth-content">
+        <%- include("../partials/sidebar", { activePage: active }) %>

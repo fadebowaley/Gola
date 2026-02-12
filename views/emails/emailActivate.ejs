@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify Your Email</title>
+  </head>
+  <body style="font-family: Arial, sans-serif; color: #1f2937; line-height: 1.5;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="center" style="padding: 24px;">
+          <table
+            role="presentation"
+            width="560"
+            cellspacing="0"
+            cellpadding="0"
+            style="max-width: 560px; border: 1px solid #e5e7eb; border-radius: 10px; padding: 24px;">
+            <tr>
+              <td>
+                <h2 style="margin: 0 0 12px 0;">Confirm your email address</h2>
+                <p style="margin: 0 0 16px 0;">
+                  Hi <%= username || "there" %>, please verify your email to access your Gola platform account.
+                </p>
+                <p style="margin: 0 0 20px 0;">
+                  <a
+                    href="<%= verifyUrl %>"
+                    style="background: #111827; color: #ffffff; text-decoration: none; padding: 10px 16px; border-radius: 6px; display: inline-block;">
+                    Verify Email
+                  </a>
+                </p>
+                <p style="margin: 0 0 8px 0; font-size: 14px; color: #4b5563;">
+                  If the button does not work, paste this link into your browser:
+                </p>
+                <p style="margin: 0; font-size: 13px; word-break: break-all;">
+                  <%= verifyUrl %>
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

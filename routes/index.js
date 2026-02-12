@@ -1,31 +1,12 @@
 const express = require("express");
+const publicController = require("../controllers/public.controller");
+
 const router = express.Router();
-const Item = require("../models/item");
 
-// Home route
-router.get("/", async (req, res) => {
-  try {
-    const items = await Item.find();
-    res.render("pages/index", { items });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Server Error");
-  }
-});
-
-// About Me page
-router.get("/about", (req, res) => {
-  res.render("pages/about");
-});
-
-// Learn page (course sales)
-router.get("/learn", (req, res) => {
-  res.render("pages/learn");
-});
-
-// Ask Questions page
-router.get("/ask", (req, res) => {
-  res.render("pages/ask");
-});
+router.get("/", publicController.renderHome);
+router.get("/about", publicController.renderAbout);
+router.get("/ask", publicController.renderAsk);
+router.post("/send-message", publicController.submitContactMessage);
+router.get("/api/blogs", publicController.getBlogs);
 
 module.exports = router;

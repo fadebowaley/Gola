@@ -1,51 +1,52 @@
+const crypto = require("crypto");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const User = require("../models/user");
-const Permission = require("../models/permission");
-
-// function to generate Token
-function generateToken() {
-  return require("crypto").randomBytes(20).toString("hex");
-}
-
 const { sendVerificationEmailInBackground } = require("../worker/workers");
 
-//send a verification email
-async function sendVerificationEmail(email) {
-  // Check if the user exists in the database
-  const user = await User.findOne({ email });
-  if (!user) {
-    throw new Error("User does not exist");
-  }
+const GOOGLE_AUTH_ENABLED = Boolean(
+  process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
+);
 
-  // Generate a new token and save it to the user's record in the database
-  const token = generateToken();
-  user.emailVerificationToken = token;
-  user.emailVerificationTokenExpiresAt = new Date(
-    Date.now() + 24 * 60 * 60 * 1000
-  ); // Token expires in 24 hours
-  await user.save();
-
-  // Send the verification email to the user
-  await sendVerificationEmailInBackground(token, email, user.firstname);
+function generateToken() {
+  return crypto.randomBytes(24).toString("hex");
 }
 
-// Serialize user into session
+async function issueEmailVerification(user) {
+  const token = generateToken();
+  user.emailVerificationToken = token;
+  user.emailVerificationTokenExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+  await user.save();
+
+  const appBaseUrl =
+    process.env.APP_BASE_URL || `http://localhost:${process.env.PORT || 3000}`;
+
+  // Keep a local fallback path while email templates/providers are still being completed.
+  console.info(
+    `[auth] email verification link for ${user.email}: ${appBaseUrl}/user/verify-email/${token}`
+  );
+
+  try {
+    await sendVerificationEmailInBackground(token, user.email, user.firstname || "User");
+  } catch (error) {
+    console.error("[auth] failed to queue verification email", error);
+  }
+}
+
 passport.serializeUser((user, done) => {
-  done(null, user.id); // Serialize user by storing user ID in the session
+  done(null, user.id);
 });
 
-// Deserialize user from session
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findById(id); // Retrieve user by ID
-    done(null, user); // Pass user to the next middleware
-  } catch (err) {
-    done(err, null); // Handle errors
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (error) {
+    done(error, null);
   }
 });
 
-// Passport middleware
 passport.use(
   "local.signup",
   new LocalStrategy(
@@ -56,26 +57,37 @@ passport.use(
     },
     async (req, email, password, done) => {
       try {
-        const { title, firstname, lastname, phone } = req.body;
-        const existingUser = await User.findOne({ email });
+        const normalizedEmail = String(email).trim().toLowerCase();
+        const existingUser = await User.findOne({ email: normalizedEmail });
+
         if (existingUser) {
-          return done(null, false, { message: "Email already exists" });
+          return done(null, false, { message: "Email already exists." });
         }
+
+        const firstname = String(req.body.firstname || "").trim();
+        const lastname = String(req.body.lastname || "").trim();
+        const phone = String(req.body.phone || "").trim();
+        const title = String(req.body.title || "").trim();
+
         const user = new User({
           title,
           firstname,
           lastname,
-          email,
           phone,
+          email: normalizedEmail,
           password,
-          avatar: new User().getGravatar(),
+          role: "student",
+          authProvider: "local",
+          emailVerified: false,
         });
+
+        user.avatar = user.getGravatar();
         await user.save();
-        //send verification email
-        sendVerificationEmail(user.email);
+        await issueEmailVerification(user);
+
         return done(null, user);
-      } catch (err) {
-        return done(err);
+      } catch (error) {
+        return done(error);
       }
     }
   )
@@ -87,29 +99,113 @@ passport.use(
     {
       usernameField: "identifier",
       passwordField: "password",
-      passReqToCallback: true, // Ensure req is passed
+      passReqToCallback: true,
     },
     async (req, identifier, password, done) => {
-      // Correct order with req as the first parameter
       try {
+        const normalized = String(identifier).trim().toLowerCase();
         const user = await User.findOne({
-          $or: [{ email: identifier }, { username: identifier }],
+          $or: [{ email: normalized }, { username: identifier }],
         });
 
         if (!user) {
-          return done(null, false, { message: "Invalid email or username" });
+          return done(null, false, { message: "Invalid email/username or password." });
+        }
+
+        if (!user.password) {
+          return done(null, false, {
+            message: "This account uses social login. Please continue with Google.",
+          });
         }
 
         const isMatch = await user.validPassword(password);
         if (!isMatch) {
-          return done(null, false, { message: "Incorrect password" });
+          return done(null, false, { message: "Invalid email/username or password." });
         }
+
+        if (!user.emailVerified) {
+          return done(null, false, {
+            message: "Please verify your email before accessing the platform.",
+          });
+        }
+
         return done(null, user);
-      } catch (err) {
-        return done(err);
+      } catch (error) {
+        return done(error);
       }
     }
   )
 );
+
+if (GOOGLE_AUTH_ENABLED) {
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: process.env.GOOGLE_CALLBACK_URL || "/user/auth/google/callback",
+      },
+      async (_accessToken, _refreshToken, profile, done) => {
+        try {
+          const email =
+            profile?.emails?.[0]?.value?.toLowerCase() ||
+            `${profile.id}@google.local`;
+          const googleEmailVerified = Boolean(
+            profile?.emails?.[0]?.verified || profile?._json?.email_verified
+          );
+
+          if (!googleEmailVerified) {
+            return done(null, false, {
+              message: "Google account email is not verified.",
+            });
+          }
+
+          let user = await User.findOne({
+            $or: [{ googleId: profile.id }, { email }],
+          });
+
+          if (!user) {
+            const firstName = profile?.name?.givenName || "Google";
+            const lastName = profile?.name?.familyName || "User";
+
+            user = new User({
+              firstname: firstName,
+              lastname: lastName,
+              email,
+              role: "subscriber",
+              authProvider: "google",
+              googleId: profile.id,
+              emailVerified: true,
+              emailVerifiedAt: new Date(),
+            });
+            user.avatar = profile?.photos?.[0]?.value || user.getGravatar();
+            await user.save();
+          } else {
+            let changed = false;
+            if (!user.googleId) {
+              user.googleId = profile.id;
+              changed = true;
+            }
+            if (!user.emailVerified) {
+              user.emailVerified = true;
+              user.emailVerifiedAt = new Date();
+              changed = true;
+            }
+            if (changed) {
+              await user.save();
+            }
+          }
+
+          return done(null, user);
+        } catch (error) {
+          return done(error, null);
+        }
+      }
+    )
+  );
+}
+
+passport.issueEmailVerification = issueEmailVerification;
+passport.GOOGLE_AUTH_ENABLED = GOOGLE_AUTH_ENABLED;
 
 module.exports = passport;

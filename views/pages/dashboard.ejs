@@ -1,0 +1,60 @@
+<%- include("../partials/lms-layout-start", { lmsPageTitle, lmsActive }) %>
+
+<section class="lms-section">
+  <h2>Overview</h2>
+  <div class="lms-grid cols-3">
+    <article class="lms-card">
+      <div class="metric">3</div>
+      <p class="muted">Active courses this month</p>
+      <span class="status-chip good">On Track</span>
+    </article>
+    <article class="lms-card">
+      <div class="metric">78%</div>
+      <p class="muted">Average completion progress</p>
+      <span class="status-chip">+12% from last month</span>
+    </article>
+    <article class="lms-card">
+      <div class="metric">4</div>
+      <p class="muted">Assignments due this week</p>
+      <span class="status-chip warn">2 due in 48 hours</span>
+    </article>
+  </div>
+</section>
+
+<section class="lms-section">
+  <h2>Today&apos;s Learning Agenda</h2>
+  <div class="lms-grid cols-2">
+    <article class="lms-card">
+      <h4>Backend Engineering Sprint</h4>
+      <p class="muted">Module 4: Authentication architecture, session flow, and route protection.</p>
+      <div class="progress-track">
+        <div class="progress-value" style="width: 62%"></div>
+      </div>
+      <p class="muted mt-2">62% complete</p>
+      <a class="lms-btn primary mt-2" href="/learn"><i class="las la-play"></i> Continue Sprint</a>
+    </article>
+    <article class="lms-card">
+      <h4>Upcoming Deadlines</h4>
+      <ul class="mb-0">
+        <li>API Security Quiz - Friday</li>
+        <li>Deployment Reflection Notes - Saturday</li>
+        <li>Code Review Submission - Monday</li>
+      </ul>
+      <a class="lms-btn mt-3" href="/user/assignments"><i class="las la-tasks"></i> Open Assignments</a>
+    </article>
+  </div>
+</section>
+
+<section class="lms-section">
+  <h2>Quick Tools</h2>
+  <div class="lms-actions">
+    <a class="lms-btn primary" href="/user/my-courses"><i class="las la-layer-group"></i> My Courses</a>
+    <a class="lms-btn" href="/user/progress"><i class="las la-chart-line"></i> Progress Analytics</a>
+    <a class="lms-btn" href="/user/calendar"><i class="las la-calendar-alt"></i> Calendar</a>
+    <a class="lms-btn" href="/user/certificates"><i class="las la-certificate"></i> Certificates</a>
+    <a class="lms-btn" href="/user/billing"><i class="las la-wallet"></i> Billing</a>
+    <a class="lms-btn" href="/courses"><i class="las la-book-open"></i> Course Catalog</a>
+  </div>
+</section>
+
+<%- include("../partials/lms-layout-end") %>

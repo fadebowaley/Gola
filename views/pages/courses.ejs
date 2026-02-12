@@ -1,0 +1,64 @@
+<%- include("../partials/lms-layout-start", { lmsPageTitle, lmsActive }) %>
+
+<section class="lms-section">
+  <h2>Course Catalog</h2>
+  <p class="muted">Explore programs, compare outcomes, and proceed to enrollment.</p>
+  <div class="lms-grid cols-3 mt-3">
+    <article class="lms-card">
+      <h4>Complete Web Development Bootcamp</h4>
+      <p class="muted">Backend APIs, auth, data modeling, and production deployment.</p>
+      <p><strong>12 weeks</strong> · Intermediate</p>
+      <p><strong>₦299,000</strong></p>
+      <div class="lms-actions">
+        <a class="lms-btn primary" href="/payment/enroll/web-dev"><i class="las la-credit-card"></i> Enroll</a>
+        <a class="lms-btn" href="/user/my-courses"><i class="las la-plus-circle"></i> Save</a>
+      </div>
+    </article>
+
+    <article class="lms-card">
+      <h4>AWS Cloud Practitioner</h4>
+      <p class="muted">Cloud services, security basics, and exam-focused learning.</p>
+      <p><strong>8 weeks</strong> · Beginner to Intermediate</p>
+      <p><strong>₦199,000</strong></p>
+      <div class="lms-actions">
+        <a class="lms-btn primary" href="/payment/enroll/aws-cloud"><i class="las la-credit-card"></i> Enroll</a>
+        <a class="lms-btn" href="/user/my-courses"><i class="las la-plus-circle"></i> Save</a>
+      </div>
+    </article>
+
+    <article class="lms-card">
+      <h4>Mentorship Sprint</h4>
+      <p class="muted">Weekly strategy and code reviews for your active product goals.</p>
+      <p><strong>Monthly</strong> · Personalized Track</p>
+      <p><strong>₦150,000 / month</strong></p>
+      <div class="lms-actions">
+        <a class="lms-btn primary" href="/payment/enroll/mentorship"><i class="las la-credit-card"></i> Enroll</a>
+        <a class="lms-btn" href="/ask"><i class="las la-comment-dots"></i> Ask Questions</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="lms-section">
+  <h2>Learning Essentials</h2>
+  <div class="lms-grid cols-2">
+    <article class="lms-card">
+      <h4>Recommended Order</h4>
+      <ol class="mb-0">
+        <li>Web Development Bootcamp</li>
+        <li>AWS Cloud Practitioner</li>
+        <li>Mentorship Sprint</li>
+      </ol>
+    </article>
+    <article class="lms-card">
+      <h4>Included Support</h4>
+      <ul class="mb-0">
+        <li>Structured modules and checkpoints</li>
+        <li>Progress visibility in dashboard</li>
+        <li>Assignment and calendar tracking</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<%- include("../partials/lms-layout-end") %>

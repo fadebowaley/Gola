@@ -19,6 +19,10 @@ document.querySelectorAll('.video-gallery-item').forEach(item => {
   const video = item.querySelector('.portfolio-video');
   const closeButton = item.querySelector('.close-button');
 
+  if (!videoCover || !videoFrame || !video || !closeButton) {
+    return;
+  }
+
   // Show video overlay with animation and play video on click
   item.addEventListener('click', function() {
     videoCover.style.display = 'none';

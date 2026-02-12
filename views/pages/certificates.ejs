@@ -1,0 +1,35 @@
+<%- include("../partials/lms-layout-start", { lmsPageTitle, lmsActive }) %>
+
+<section class="lms-section">
+  <h2>Certificates</h2>
+  <div class="lms-grid cols-2">
+    <article class="lms-card">
+      <h4>Foundations of Backend Engineering</h4>
+      <p class="muted">Issued on January 18, 2026</p>
+      <span class="status-chip good">Issued</span>
+      <div class="lms-actions mt-3">
+        <a class="lms-btn" href="#"><i class="las la-download"></i> Download</a>
+        <a class="lms-btn" href="#"><i class="las la-share-alt"></i> Share</a>
+      </div>
+    </article>
+    <article class="lms-card">
+      <h4>AWS Practitioner Readiness</h4>
+      <p class="muted">Awarded after completion of final assessment.</p>
+      <span class="status-chip warn">In Progress</span>
+      <div class="progress-track mt-3"><div class="progress-value" style="width: 58%"></div></div>
+      <p class="muted mt-2">58% complete</p>
+    </article>
+  </div>
+</section>
+
+<section class="lms-section">
+  <h2>Verification Notes</h2>
+  <article class="lms-card">
+    <p class="mb-0">
+      Certificate verification endpoints and blockchain/notary integrations can be attached in a later phase.
+      Current LMS state focuses on learner progress and downloadable proof files.
+    </p>
+  </article>
+</section>
+
+<%- include("../partials/lms-layout-end") %>

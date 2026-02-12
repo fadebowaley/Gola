@@ -1,0 +1,72 @@
+<%- include("../partials/header", { pageTitle: "Register - Gola" }) %>
+<%- include("../partials/page-shell-start", { activePage: "login" }) %>
+
+<section class="hero-section page-section scroll-to-page" id="register-hero">
+  <div class="custom-container">
+    <div class="hero-content content-width">
+      <div class="page-intro">
+        <span class="eyebrow scroll-animation" data-animation="fade_from_bottom">Onboarding</span>
+        <h1 class="scroll-animation" data-animation="fade_from_bottom">Create your platform account</h1>
+        <p class="scroll-animation" data-animation="fade_from_bottom">
+          After signup, verify your email to unlock platform access and course enrollment.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-area page-section scroll-to-page" id="register-form">
+  <div class="custom-container">
+    <div class="contact-content content-width">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="auth-panel scroll-animation" data-animation="fade_from_bottom">
+            <h3 class="mb-3">Create Account</h3>
+
+            <% if (error && error.length) { %>
+              <div class="alert alert-danger">
+                <% error.forEach(function(msg) { %>
+                  <div><%= msg %></div>
+                <% }); %>
+              </div>
+            <% } %>
+
+            <form method="POST" action="/user/register">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="firstname" class="form-label">First Name</label>
+                  <input id="firstname" name="firstname" class="form-control" required />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="lastname" class="form-label">Last Name</label>
+                  <input id="lastname" name="lastname" class="form-control" required />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input id="email" name="email" type="email" class="form-control" required />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="phone" class="form-label">Phone</label>
+                  <input id="phone" name="phone" class="form-control" />
+                </div>
+              </div>
+              <div class="mb-4">
+                <label for="password" class="form-label">Password</label>
+                <input id="password" name="password" type="password" class="form-control" minlength="6" required />
+              </div>
+              <button class="theme-btn w-100" type="submit"><i class="las la-user-plus"></i> Register</button>
+            </form>
+
+            <p class="mt-4 mb-0 text-center">
+              Already have an account? <a href="/user/login">Login</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include("../partials/page-shell-end") %>

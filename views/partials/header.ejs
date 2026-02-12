@@ -4,17 +4,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Demola - Building Technologies that scales</title>
+    <title><%= typeof pageTitle !== "undefined" ? pageTitle : "Demola - Building Technologies that scale" %></title>
     <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
 
-    <!-- Font -->
     <link rel="preconnect" href="/fonts.googleapis.com/index.html" />
     <link rel="preconnect" href="/fonts.gstatic.com/index.html" crossorigin />
     <link
       href="/fonts.googleapis.com/css2c948.css?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
       rel="stylesheet" />
 
-    <!-- Stylesheet -->
     <link rel="stylesheet" href="/css/line-awesome.min.css" />
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/css/owl.carousel.min.css" />
@@ -24,49 +22,157 @@
     <link rel="stylesheet" href="/css/lightbox.min.css" />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/responsive.css" />
+
+    <style>
+      .sub-title {
+        margin-left: 3rem;
+      }
+
+      .global-color .inner .global-color-option {
+        max-width: 600px;
+        width: 80%;
+        margin-left: auto;
+        height: 100%;
+        overflow-x: hidden;
+        margin-right: -400px;
+        background: rgb(25, 25, 25);
+        transition: 0.4s;
+        padding: 48px;
+      }
+
+      .video-frame {
+        display: none;
+        opacity: 0;
+        transform: scale(0.8);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+      }
+
+      .video-frame.show {
+        display: flex;
+        opacity: 1;
+        transform: scale(1);
+        animation: light-glow 2s infinite alternate ease-in-out;
+      }
+
+      @keyframes light-glow {
+        from {
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        to {
+          box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+        }
+      }
+
+      .video-frame.hide {
+        opacity: 0;
+        transform: scale(0.8);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+      }
+
+      .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #ffffffaa;
+        border: none;
+        font-size: 18px;
+        color: #333;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1001;
+      }
+
+      .inner-page .custom-container {
+        max-width: 1160px;
+      }
+
+      .inner-page .page-intro {
+        margin-bottom: 28px;
+      }
+
+      .inner-page .page-intro .eyebrow {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #8f8f9c;
+      }
+
+      .inner-page .page-intro h1 {
+        margin-top: 12px;
+        margin-bottom: 14px;
+      }
+
+      .inner-page .page-intro p {
+        max-width: 760px;
+      }
+
+      .surface-card {
+        border: 1px solid #343444;
+        background: #1f1f2b;
+        border-radius: 12px;
+        padding: 22px;
+        height: 100%;
+      }
+
+      .surface-card h3,
+      .surface-card h4 {
+        margin-bottom: 12px;
+      }
+
+      .surface-card p:last-child,
+      .surface-card ul:last-child {
+        margin-bottom: 0;
+      }
+
+      .stats-strip {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        border: 1px solid #3b3b4a;
+        color: #c7c7d2;
+        padding: 6px 10px;
+        border-radius: 999px;
+      }
+
+      .status-pill.good {
+        border-color: #1f8f63;
+        color: #7ed9ad;
+      }
+
+      .auth-panel {
+        border: 1px solid #343444;
+        border-radius: 12px;
+        padding: 28px;
+        background: #1f1f2b;
+      }
+
+      .auth-panel .form-control,
+      .auth-panel .form-select {
+        background: #14141c;
+        border: 1px solid #343444;
+        color: #f5f5f6;
+      }
+
+      .auth-panel .form-control:focus,
+      .auth-panel .form-select:focus {
+        border-color: #525267;
+        box-shadow: none;
+      }
+
+      .auth-panel .form-label {
+        color: #b4b4c2;
+      }
+    </style>
   </head>
-  <body>
-    <!-- Header -->
-    <header class="header">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <div class="header-inner">
-              <div class="logo">
-                <a href="/">
-                  <img src="/images/logo.png" alt="Demola" />
-                </a>
-              </div>
-              <div class="header-right">
-                <nav class="main-menu">
-                  <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/learn">Learn</a></li>
-                    <li><a href="/ask">Ask</a></li>
-                    <% if (user) { %>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
-                          <%= user.firstname %> <i class="las la-angle-down"></i>
-                        </a>
-                        <ul class="dropdown-menu">
-                          <li><a href="/user/dashboard">Dashboard</a></li>
-                          <li><a href="/user/profile">Profile</a></li>
-                          <li><a href="/user/logout">Logout</a></li>
-                        </ul>
-                      </li>
-                    <% } else { %>
-                      <li><a href="/user/login" class="btn btn-primary">Login</a></li>
-                      <li><a href="/user/register" class="btn btn-outline-primary">Register</a></li>
-                    <% } %>
-                  </ul>
-                </nav>
-                <div class="header-btn">
-                  <a href="/learn" class="btn btn-primary">Get Started</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>

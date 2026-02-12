@@ -1,0 +1,65 @@
+<%- include("../partials/lms-layout-start", { lmsPageTitle, lmsActive }) %>
+
+<section class="lms-section">
+  <h2>Billing Overview</h2>
+  <div class="lms-grid cols-3">
+    <article class="lms-card">
+      <h4>Current Plan</h4>
+      <p class="metric">Mentorship Sprint</p>
+      <p class="muted">Renews monthly</p>
+    </article>
+    <article class="lms-card">
+      <h4>Next Charge</h4>
+      <p class="metric">₦150,000</p>
+      <p class="muted">Due in 12 days</p>
+    </article>
+    <article class="lms-card">
+      <h4>Payment Status</h4>
+      <span class="status-chip good">Good Standing</span>
+      <p class="muted mt-2">No failed charges</p>
+    </article>
+  </div>
+</section>
+
+<section class="lms-section">
+  <h2>Transaction History</h2>
+  <div class="table-wrap">
+    <table class="lms-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Reference</th>
+          <th>Description</th>
+          <th>Amount</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2026-02-01</td>
+          <td>GOLA-LMS-0012</td>
+          <td>Mentorship Sprint</td>
+          <td>₦150,000</td>
+          <td><span class="status-chip good">Paid</span></td>
+        </tr>
+        <tr>
+          <td>2026-01-15</td>
+          <td>GOLA-LMS-0008</td>
+          <td>Web Development Bootcamp</td>
+          <td>₦299,000</td>
+          <td><span class="status-chip good">Paid</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="lms-section">
+  <h2>Billing Actions</h2>
+  <div class="lms-actions">
+    <a class="lms-btn" href="/payment/enroll/web-dev"><i class="las la-credit-card"></i> Test Enrollment Route</a>
+    <a class="lms-btn primary" href="/ask"><i class="las la-life-ring"></i> Billing Support</a>
+  </div>
+</section>
+
+<%- include("../partials/lms-layout-end") %>

@@ -1,0 +1,133 @@
+<%- include("../partials/lms-layout-start", { lmsPageTitle, lmsActive }) %>
+
+<style>
+  .lab-editor,
+  .lab-output {
+    width: 100%;
+    min-height: 260px;
+    border-radius: 10px;
+    border: 1px solid var(--lms-border);
+    background: #0f1522;
+    color: #dbe6ff;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 12px;
+  }
+
+  .lab-output {
+    min-height: 180px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+</style>
+
+<section class="lms-section">
+  <h2>Student Code Lab</h2>
+  <p class="muted">
+    Run synchronous JavaScript snippets in an isolated sandbox.
+    Network access, file system access, and async runtime are blocked for safety.
+  </p>
+</section>
+
+<section class="lms-section">
+  <h2>Editor</h2>
+  <div class="lms-grid cols-2">
+    <article class="lms-card">
+      <h4>Code Input</h4>
+      <textarea id="labCode" class="lab-editor">const student = { name: "Learner", score: 95 };
+console.log("Welcome", student.name);
+student.score + 5;</textarea>
+      <div class="lms-actions mt-3">
+        <button class="lms-btn primary" id="runCodeBtn" type="button">
+          <i class="las la-play"></i> Run Code
+        </button>
+        <button class="lms-btn" id="resetCodeBtn" type="button">
+          <i class="las la-undo"></i> Reset
+        </button>
+      </div>
+    </article>
+
+    <article class="lms-card">
+      <h4>Execution Output</h4>
+      <div class="lms-grid">
+        <div>
+          <small class="muted">Result</small>
+          <pre id="labResult" class="lab-output">Run code to see output...</pre>
+        </div>
+        <div>
+          <small class="muted">Console Logs</small>
+          <pre id="labLogs" class="lab-output">No logs yet.</pre>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<script>
+  (function () {
+    const defaultCode = `const student = { name: "Learner", score: 95 };
+console.log("Welcome", student.name);
+student.score + 5;`;
+
+    const runButton = document.getElementById("runCodeBtn");
+    const resetButton = document.getElementById("resetCodeBtn");
+    const codeInput = document.getElementById("labCode");
+    const resultOutput = document.getElementById("labResult");
+    const logsOutput = document.getElementById("labLogs");
+
+    if (!runButton || !resetButton || !codeInput || !resultOutput || !logsOutput) {
+      return;
+    }
+
+    const setIdle = () => {
+      runButton.disabled = false;
+      runButton.innerHTML = '<i class="las la-play"></i> Run Code';
+    };
+
+    runButton.addEventListener("click", async () => {
+      runButton.disabled = true;
+      runButton.innerHTML = '<i class="las la-spinner la-spin"></i> Running...';
+      resultOutput.textContent = "Running...";
+      logsOutput.textContent = "";
+
+      try {
+        const response = await fetch("/user/lab/run-code", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            language: "javascript",
+            code: codeInput.value,
+          }),
+        });
+
+        const data = await response.json();
+        if (!response.ok || !data.success) {
+          resultOutput.textContent = `Error: ${data.error || "Execution failed."}`;
+          logsOutput.textContent = Array.isArray(data.logs) && data.logs.length
+            ? data.logs.join("\n")
+            : "No logs captured.";
+          return;
+        }
+
+        resultOutput.textContent = data.result || "undefined";
+        logsOutput.textContent = Array.isArray(data.logs) && data.logs.length
+          ? data.logs.join("\n")
+          : "No logs captured.";
+      } catch (error) {
+        resultOutput.textContent = `Error: ${error.message}`;
+        logsOutput.textContent = "Execution request failed.";
+      } finally {
+        setIdle();
+      }
+    });
+
+    resetButton.addEventListener("click", () => {
+      codeInput.value = defaultCode;
+      resultOutput.textContent = "Run code to see output...";
+      logsOutput.textContent = "No logs yet.";
+    });
+  })();
+</script>
+
+<%- include("../partials/lms-layout-end") %>

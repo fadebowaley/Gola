@@ -1,0 +1,54 @@
+<%- include("../partials/lms-layout-start", { lmsPageTitle, lmsActive }) %>
+
+<section class="lms-section">
+  <h2>My Active Courses</h2>
+  <div class="table-wrap">
+    <table class="lms-table">
+      <thead>
+        <tr>
+          <th>Course</th>
+          <th>Progress</th>
+          <th>Next Milestone</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Complete Web Development Bootcamp</td>
+          <td>72%</td>
+          <td>API Security Quiz</td>
+          <td><a class="lms-btn" href="/learn"><i class="las la-play"></i> Continue</a></td>
+        </tr>
+        <tr>
+          <td>AWS Cloud Practitioner</td>
+          <td>34%</td>
+          <td>Cloud Cost Model Exercise</td>
+          <td><a class="lms-btn" href="/learn"><i class="las la-play"></i> Continue</a></td>
+        </tr>
+        <tr>
+          <td>Mentorship Sprint</td>
+          <td>15%</td>
+          <td>Weekly Architecture Review</td>
+          <td><a class="lms-btn" href="/user/calendar"><i class="las la-calendar-alt"></i> View Session</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="lms-section">
+  <h2>Recommendations</h2>
+  <div class="lms-grid cols-2">
+    <article class="lms-card">
+      <h4>Focus This Week</h4>
+      <p class="muted">Complete remaining authentication modules before moving into deployment content.</p>
+    </article>
+    <article class="lms-card">
+      <h4>Next Enrollment</h4>
+      <p class="muted">Consider finishing AWS Practitioner after current backend track to strengthen deployment decisions.</p>
+      <a class="lms-btn mt-2" href="/courses"><i class="las la-book-open"></i> Open Catalog</a>
+    </article>
+  </div>
+</section>
+
+<%- include("../partials/lms-layout-end") %>

@@ -1,0 +1,42 @@
+<%- include("../partials/lms-layout-start", { lmsPageTitle, lmsActive }) %>
+
+<section class="lms-section">
+  <h2>Assignments Queue</h2>
+  <div class="lms-grid cols-3">
+    <article class="lms-card">
+      <h4>API Security Quiz</h4>
+      <p class="muted">Course: Web Development Bootcamp</p>
+      <span class="status-chip warn">Due in 2 days</span>
+    </article>
+    <article class="lms-card">
+      <h4>Deployment Checklist</h4>
+      <p class="muted">Course: AWS Cloud Practitioner</p>
+      <span class="status-chip">Due in 5 days</span>
+    </article>
+    <article class="lms-card">
+      <h4>System Design Reflection</h4>
+      <p class="muted">Mentorship Sprint deliverable</p>
+      <span class="status-chip good">Submitted</span>
+    </article>
+  </div>
+</section>
+
+<section class="lms-section">
+  <h2>Submission Rules</h2>
+  <div class="lms-grid cols-2">
+    <article class="lms-card">
+      <ul class="mb-0">
+        <li>Provide concise architecture notes with each submission.</li>
+        <li>Attach code links and deployment evidence where required.</li>
+        <li>Use review comments to update your next sprint plan.</li>
+      </ul>
+    </article>
+    <article class="lms-card">
+      <h4>Need Clarification?</h4>
+      <p class="muted">Use support to resolve blockers before deadlines.</p>
+      <a class="lms-btn primary" href="/ask"><i class="las la-life-ring"></i> Contact Support</a>
+    </article>
+  </div>
+</section>
+
+<%- include("../partials/lms-layout-end") %>

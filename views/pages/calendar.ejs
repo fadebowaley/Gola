@@ -1,0 +1,48 @@
+<%- include("../partials/lms-layout-start", { lmsPageTitle, lmsActive }) %>
+
+<section class="lms-section">
+  <h2>Weekly Calendar</h2>
+  <div class="table-wrap">
+    <table class="lms-table">
+      <thead>
+        <tr>
+          <th>Day</th>
+          <th>Session</th>
+          <th>Time</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Monday</td>
+          <td>Backend Module Review</td>
+          <td>10:00 AM</td>
+          <td><span class="status-chip">Recorded Lesson</span></td>
+        </tr>
+        <tr>
+          <td>Wednesday</td>
+          <td>Mentorship Group Checkpoint</td>
+          <td>2:00 PM</td>
+          <td><span class="status-chip good">Live Session</span></td>
+        </tr>
+        <tr>
+          <td>Friday</td>
+          <td>API Security Quiz Window</td>
+          <td>All Day</td>
+          <td><span class="status-chip warn">Assessment</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="lms-section">
+  <h2>Planning Actions</h2>
+  <div class="lms-actions">
+    <a class="lms-btn" href="/user/assignments"><i class="las la-tasks"></i> View Assignments</a>
+    <a class="lms-btn" href="/learn"><i class="las la-route"></i> Review Learning Path</a>
+    <a class="lms-btn primary" href="/ask"><i class="las la-comment-dots"></i> Request Schedule Support</a>
+  </div>
+</section>
+
+<%- include("../partials/lms-layout-end") %>

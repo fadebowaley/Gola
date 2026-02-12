@@ -1,8 +1,6 @@
 // models/Message.js
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
 const { conn } = require("../config/db");
-
 
 const messageSchema = new mongoose.Schema({
   fullName: { type: String, required: true },
@@ -14,4 +12,4 @@ const messageSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("Message", messageSchema);
+module.exports = conn.models.Message || conn.model("Message", messageSchema);

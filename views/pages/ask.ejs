@@ -1,153 +1,170 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ask Questions - Demola</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-    <%- include('../partials/header') %>
-    
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <h1 class="text-center mb-5">Ask Questions</h1>
-                <p class="lead text-center mb-5">Have questions about our courses, mentorship, or technology? I'm here to help!</p>
-                
-                <!-- Question Form -->
-                <div class="card mb-5">
-                    <div class="card-header">
-                        <h3>Submit Your Question</h3>
-                    </div>
-                    <div class="card-body">
-                        <form id="questionForm">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Your Name</label>
-                                <input type="text" class="form-control" id="name" name="name" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email Address</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="subject" class="form-label">Subject</label>
-                                <select class="form-select" id="subject" name="subject" required>
-                                    <option value="">Select a topic</option>
-                                    <option value="course">Course Information</option>
-                                    <option value="mentorship">Mentorship Program</option>
-                                    <option value="technical">Technical Question</option>
-                                    <option value="career">Career Guidance</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="question" class="form-label">Your Question</label>
-                                <textarea class="form-control" id="question" name="question" rows="5" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit Question</button>
-                        </form>
-                    </div>
-                </div>
+<%- include("../partials/header", { pageTitle: "Ask - Gola" }) %>
+<%- include("../partials/page-shell-start", { activePage: "ask" }) %>
 
-                <!-- FAQ Section -->
-                <section class="mb-5">
-                    <h2 class="text-center mb-4">Frequently Asked Questions</h2>
-                    <div class="accordion" id="faqAccordion">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="faq1">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
-                                    How long do I have access to the courses?
-                                </button>
-                            </h2>
-                            <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    You have lifetime access to all course materials, including future updates and new content.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="faq2">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
-                                    What if I'm a complete beginner?
-                                </button>
-                            </h2>
-                            <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Our courses are designed for all skill levels, with beginner-friendly explanations and step-by-step guidance.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="faq3">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
-                                    How does the mentorship program work?
-                                </button>
-                            </h2>
-                            <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    The mentorship program includes weekly 1-on-1 sessions, project reviews, career guidance, and personalized learning paths.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="faq4">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4">
-                                    Do you offer refunds?
-                                </button>
-                            </h2>
-                            <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Yes, we offer a 30-day money-back guarantee if you're not satisfied with your purchase.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Contact Information -->
-                <section class="text-center">
-                    <h3>Other Ways to Connect</h3>
-                    <div class="row mt-4">
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5>Email</h5>
-                                    <p>admin@fadebowaley.xyz</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5>Response Time</h5>
-                                    <p>Within 24 hours</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5>Community</h5>
-                                    <p>Join our Discord server</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div>
+<section class="hero-section page-section scroll-to-page" id="ask-hero">
+  <div class="custom-container">
+    <div class="hero-content content-width">
+      <div class="page-intro">
+        <span class="eyebrow scroll-animation" data-animation="fade_from_bottom">Support</span>
+        <h1 class="scroll-animation" data-animation="fade_from_bottom">Ask technical, learning, or project questions</h1>
+        <p class="scroll-animation" data-animation="fade_from_bottom">
+          Share context, your current stage, and what outcome you need. You will get a focused response
+          that maps to either a learning path or an implementation path.
+        </p>
+      </div>
     </div>
+  </div>
+</section>
 
-    <%- include('../partials/footer') %>
-    <script src="/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.getElementById('questionForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your question! I\'ll get back to you within 24 hours.');
-            this.reset();
+<section class="contact-area page-section scroll-to-page" id="ask-form">
+  <div class="custom-container">
+    <div class="contact-content content-width">
+      <div class="section-header">
+        <h4 class="subtitle scroll-animation" data-animation="fade_from_bottom">
+          <i class="las la-envelope"></i> Submit Question
+        </h4>
+        <h1 class="scroll-animation" data-animation="fade_from_bottom">
+          Let&apos;s Work <span>Together</span>
+        </h1>
+      </div>
+
+      <p id="ask-form-alert"></p>
+
+      <form class="contact-form scroll-animation" data-animation="fade_from_bottom" id="question-form">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <label for="fullName">Full Name <sup>*</sup></label>
+              <input type="text" id="fullName" name="fullName" placeholder="Your Full Name" required />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <label for="email">Email <sup>*</sup></label>
+              <input type="email" id="email" name="email" placeholder="Your Email Address" required />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <label for="phone">Phone <span>(optional)</span></label>
+              <input type="text" id="phone" name="phone" placeholder="Your Phone Number" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <label for="subject">Category <sup>*</sup></label>
+              <select id="subject" name="subject" required>
+                <option value="">Select a category</option>
+                <option value="course-support">Course Support</option>
+                <option value="mentorship">Mentorship</option>
+                <option value="project-collaboration">Project Collaboration</option>
+                <option value="general-inquiry">General Inquiry</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="input-group">
+              <label for="subjectSpec">Message Subject <sup>*</sup></label>
+              <input type="text" id="subjectSpec" name="subjectSpec" placeholder="Brief summary of your question" required />
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="input-group">
+              <label for="message">Question <sup>*</sup></label>
+              <textarea id="message" name="message" placeholder="Explain your current challenge and expected outcome..." required></textarea>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="input-group submit-btn-wrap">
+              <button class="theme-btn" id="send-question" type="submit">
+                Send Question
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="services-area page-section scroll-to-page" id="faq">
+  <div class="custom-container">
+    <div class="services-content content-width">
+      <div class="section-header">
+        <h4 class="subtitle scroll-animation" data-animation="fade_from_bottom">
+          <i class="las la-info-circle"></i> FAQ
+        </h4>
+        <h1 class="scroll-animation" data-animation="fade_from_bottom">Quick <span>Answers</span></h1>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6 scroll-animation" data-animation="fade_from_left">
+          <div class="surface-card">
+            <h4>Do I need experience before joining?</h4>
+            <p>No. Paths are structured by level, and we provide a practical ramp from fundamentals to deployment.</p>
+          </div>
+        </div>
+        <div class="col-md-6 scroll-animation" data-animation="fade_from_right">
+          <div class="surface-card">
+            <h4>How fast can I expect a response?</h4>
+            <p>Typically within 24 hours for direct questions and onboarding requests.</p>
+          </div>
+        </div>
+        <div class="col-md-6 scroll-animation" data-animation="fade_from_left">
+          <div class="surface-card">
+            <h4>Is mentorship project-based?</h4>
+            <p>Yes. We use your real project context to build skills that transfer directly to production work.</p>
+          </div>
+        </div>
+        <div class="col-md-6 scroll-animation" data-animation="fade_from_right">
+          <div class="surface-card">
+            <h4>Can teams request private sessions?</h4>
+            <p>Yes. Team cohorts, architecture reviews, and internal training sessions are available.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const questionForm = document.getElementById("question-form");
+  const alertBox = document.getElementById("ask-form-alert");
+
+  if (questionForm && alertBox) {
+    questionForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const payload = {
+        fullName: questionForm.fullName.value.trim(),
+        email: questionForm.email.value.trim(),
+        phone: questionForm.phone.value.trim(),
+        subject: questionForm.subject.value,
+        subjectSpec: questionForm.subjectSpec.value.trim(),
+        message: questionForm.message.value.trim(),
+      };
+
+      try {
+        const response = await fetch("/send-message", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
         });
-    </script>
-</body>
-</html>
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.error || "Unable to send question.");
+        }
+
+        alertBox.innerHTML =
+          '<div class="alert alert-success" role="alert">Question received. You will get a response shortly.</div>';
+        questionForm.reset();
+      } catch (error) {
+        alertBox.innerHTML =
+          `<div class="alert alert-danger" role="alert">${error.message}</div>`;
+      }
+    });
+  }
+</script>
+
+<%- include("../partials/page-shell-end") %>

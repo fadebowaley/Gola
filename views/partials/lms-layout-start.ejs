@@ -1,0 +1,458 @@
+<%
+const active = typeof lmsActive !== "undefined" ? lmsActive : "dashboard";
+const title = typeof lmsPageTitle !== "undefined" ? lmsPageTitle : "LMS Dashboard";
+const isAdmin = Boolean(user && ["admin", "owner"].includes(user.role));
+
+const menuItems = [
+  { key: "dashboard", href: "/user/dashboard", icon: "las la-home", label: "Dashboard" },
+  { key: "learn", href: "/learn", icon: "las la-graduation-cap", label: "Learning Path" },
+  { key: "courses", href: "/courses", icon: "las la-book-open", label: "Course Catalog" },
+  { key: "my-courses", href: "/user/my-courses", icon: "las la-layer-group", label: "My Courses" },
+  { key: "assignments", href: "/user/assignments", icon: "las la-tasks", label: "Assignments" },
+  { key: "progress", href: "/user/progress", icon: "las la-chart-line", label: "Progress" },
+  { key: "calendar", href: "/user/calendar", icon: "las la-calendar-alt", label: "Calendar" },
+  { key: "certificates", href: "/user/certificates", icon: "las la-certificate", label: "Certificates" },
+  { key: "billing", href: "/user/billing", icon: "las la-wallet", label: "Billing" },
+  { key: "lab", href: "/user/lab", icon: "las la-code", label: "Code Lab" },
+  { key: "api-sandbox", href: "/user/api-sandbox", icon: "las la-vial", label: "API Sandbox" },
+];
+
+if (isAdmin) {
+  menuItems.push({ key: "admin", href: "/admin", icon: "las la-user-shield", label: "Admin" });
+}
+
+menuItems.push(
+  { key: "support", href: "/ask", icon: "las la-life-ring", label: "Support" },
+  { key: "logout", href: "/user/logout", icon: "las la-sign-out-alt", label: "Logout" }
+);
+%>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= `${title} - Gola LMS` %></title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+    <link rel="preconnect" href="/fonts.googleapis.com/index.html" />
+    <link rel="preconnect" href="/fonts.gstatic.com/index.html" crossorigin />
+    <link
+      href="/fonts.googleapis.com/css2c948.css?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="/css/line-awesome.min.css" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+      :root {
+        --lms-bg: #10131b;
+        --lms-bg-soft: #161b27;
+        --lms-surface: #1b2231;
+        --lms-surface-alt: #212a3c;
+        --lms-border: #2f3a51;
+        --lms-text: #f1f3f8;
+        --lms-muted: #a7b1c5;
+        --lms-brand: #5ec8ff;
+        --lms-brand-soft: rgba(94, 200, 255, 0.16);
+        --lms-good: #2ac48a;
+        --lms-warn: #9d7dff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body.lms-body {
+        margin: 0;
+        color: var(--lms-text);
+        font-family: "Inter", sans-serif;
+        background:
+          radial-gradient(1200px 500px at 80% -20%, #2d253e 0%, transparent 60%),
+          radial-gradient(900px 460px at -20% 120%, #1e3a45 0%, transparent 62%),
+          var(--lms-bg);
+      }
+
+      .lms-app {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 280px minmax(0, 1fr);
+      }
+
+      .lms-sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow-y: auto;
+        border-right: 1px solid var(--lms-border);
+        background: rgba(16, 19, 27, 0.95);
+        backdrop-filter: blur(8px);
+        padding: 22px 14px;
+        z-index: 30;
+      }
+
+      .lms-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 10px 18px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid var(--lms-border);
+      }
+
+      .lms-brand img {
+        width: 34px;
+        height: 34px;
+        object-fit: contain;
+      }
+
+      .lms-brand strong {
+        display: block;
+        font-size: 14px;
+      }
+
+      .lms-brand small {
+        color: var(--lms-muted);
+        font-size: 11px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .lms-nav {
+        display: grid;
+        gap: 2px;
+        margin-top: 10px;
+      }
+
+      .lms-nav a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--lms-muted);
+        text-decoration: none;
+        padding: 10px 12px;
+        border-radius: 10px;
+        transition: 0.2s ease;
+        font-size: 14px;
+      }
+
+      .lms-nav a i {
+        font-size: 18px;
+        width: 20px;
+      }
+
+      .lms-nav a:hover {
+        color: var(--lms-text);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .lms-nav a.active {
+        color: #111;
+        background: linear-gradient(120deg, var(--lms-brand), #8a91ff);
+      }
+
+      .lms-main {
+        min-width: 0;
+        padding: 18px 24px 30px;
+      }
+
+      .lms-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .lms-title h1 {
+        font-size: 24px;
+        margin: 0;
+        font-weight: 600;
+      }
+
+      .lms-title p {
+        margin: 4px 0 0;
+        color: var(--lms-muted);
+        font-size: 13px;
+      }
+
+      .lms-user {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 12px;
+        border: 1px solid var(--lms-border);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.03);
+        font-size: 12px;
+      }
+
+      .lms-user .tag {
+        color: #09101a;
+        background: var(--lms-brand);
+        border-radius: 999px;
+        padding: 4px 8px;
+        font-weight: 700;
+      }
+
+      .lms-section {
+        background: linear-gradient(180deg, var(--lms-surface) 0%, var(--lms-bg-soft) 100%);
+        border: 1px solid var(--lms-border);
+        border-radius: 14px;
+        padding: 18px;
+      }
+
+      .lms-section + .lms-section {
+        margin-top: 16px;
+      }
+
+      .lms-section h2 {
+        font-size: 17px;
+        margin: 0 0 12px;
+      }
+
+      .lms-grid {
+        display: grid;
+        gap: 14px;
+      }
+
+      .lms-grid.cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .lms-grid.cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .lms-card {
+        border: 1px solid var(--lms-border);
+        border-radius: 12px;
+        padding: 14px;
+        background: var(--lms-surface-alt);
+      }
+
+      .lms-card h3,
+      .lms-card h4 {
+        margin: 0 0 8px;
+        font-size: 15px;
+      }
+
+      .lms-card p:last-child,
+      .lms-card ul:last-child {
+        margin-bottom: 0;
+      }
+
+      .metric {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+
+      .muted {
+        color: var(--lms-muted);
+      }
+
+      .status-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: 1px solid var(--lms-border);
+        border-radius: 999px;
+        padding: 4px 10px;
+        font-size: 12px;
+      }
+
+      .status-chip.good {
+        border-color: rgba(42, 196, 138, 0.45);
+        color: #7ce5be;
+      }
+
+      .status-chip.warn {
+        border-color: rgba(157, 125, 255, 0.45);
+        color: #c8b6ff;
+      }
+
+      .progress-track {
+        background: #121725;
+        border-radius: 999px;
+        height: 8px;
+        overflow: hidden;
+      }
+
+      .progress-value {
+        height: 100%;
+        background: linear-gradient(90deg, var(--lms-brand), #8a91ff);
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+      }
+
+      .lms-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .lms-table th,
+      .lms-table td {
+        padding: 10px 8px;
+        border-bottom: 1px solid var(--lms-border);
+        font-size: 13px;
+        text-align: left;
+      }
+
+      .lms-table th {
+        color: var(--lms-muted);
+        font-weight: 500;
+      }
+
+      .lms-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .lms-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        border-radius: 10px;
+        border: 1px solid var(--lms-border);
+        background: transparent;
+        color: var(--lms-text);
+        text-decoration: none;
+        padding: 9px 12px;
+        font-size: 13px;
+      }
+
+      .lms-btn.primary {
+        color: #12151f;
+        border-color: transparent;
+        background: linear-gradient(120deg, var(--lms-brand), #8a91ff);
+        font-weight: 600;
+      }
+
+      .lms-btn:hover {
+        color: var(--lms-text);
+        border-color: #4a5878;
+      }
+
+      .lms-mobile-toggle {
+        display: none;
+        border: 1px solid var(--lms-border);
+        background: transparent;
+        color: var(--lms-text);
+        border-radius: 10px;
+        padding: 6px 10px;
+      }
+
+      .lms-overlay {
+        display: none;
+      }
+
+      .alert {
+        margin-bottom: 14px;
+      }
+
+      @media (max-width: 1100px) {
+        .lms-grid.cols-3 {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 920px) {
+        .lms-app {
+          grid-template-columns: 1fr;
+        }
+
+        .lms-sidebar {
+          position: fixed;
+          left: 0;
+          top: 0;
+          transform: translateX(-105%);
+          transition: transform 0.25s ease;
+          width: 280px;
+          max-width: 86vw;
+        }
+
+        .lms-sidebar.open {
+          transform: translateX(0);
+        }
+
+        .lms-mobile-toggle {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .lms-overlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.45);
+          border: 0;
+          padding: 0;
+          z-index: 20;
+        }
+
+        .lms-overlay.show {
+          display: block;
+        }
+
+        .lms-main {
+          padding: 16px;
+        }
+
+        .lms-grid.cols-2,
+        .lms-grid.cols-3 {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body class="lms-body">
+    <div class="lms-app">
+      <button type="button" class="lms-overlay" id="lmsOverlay" aria-label="Close menu"></button>
+
+      <aside class="lms-sidebar" id="lmsSidebar">
+        <div class="lms-brand">
+          <img src="/images/logo.png" alt="Gola" />
+          <div>
+            <strong>Gola LMS</strong>
+            <small>Learning Platform</small>
+          </div>
+        </div>
+
+        <nav class="lms-nav">
+          <% menuItems.forEach(function(item) { %>
+            <a href="<%= item.href %>" class="<%= active === item.key ? "active" : "" %>">
+              <i class="<%= item.icon %>"></i>
+              <span><%= item.label %></span>
+            </a>
+          <% }) %>
+        </nav>
+      </aside>
+
+      <main class="lms-main">
+        <header class="lms-topbar">
+          <div class="d-flex align-items-center gap-2">
+            <button class="lms-mobile-toggle" id="lmsMenuToggle" type="button" aria-label="Open menu">
+              <i class="las la-bars"></i>
+            </button>
+            <div class="lms-title">
+              <h1><%= title %></h1>
+              <p>Parent brand: Gola | Workspace: LMS</p>
+            </div>
+          </div>
+          <div class="lms-user">
+            <span class="tag"><%= user && user.emailVerified ? "Verified" : "Pending" %></span>
+            <span><%= user ? (user.firstname || user.email) : "Guest" %></span>
+          </div>
+        </header>
+
+        <% if (error && error.length) { %>
+          <div class="alert alert-danger">
+            <% error.forEach(function(msg) { %><div><%= msg %></div><% }) %>
+          </div>
+        <% } %>
+        <% if (success && success.length) { %>
+          <div class="alert alert-success">
+            <% success.forEach(function(msg) { %><div><%= msg %></div><% }) %>
+          </div>
+        <% } %>

@@ -1,0 +1,173 @@
+<%- include("../partials/lms-layout-start", { lmsPageTitle, lmsActive }) %>
+
+<style>
+  .api-input,
+  .api-output {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--lms-border);
+    background: #0f1522;
+    color: #dbe6ff;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 12px;
+  }
+
+  .api-input {
+    min-height: 120px;
+  }
+
+  .api-output {
+    min-height: 320px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .api-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+</style>
+
+<section class="lms-section">
+  <h2>API Sandbox</h2>
+  <p class="muted">
+    Send test requests and inspect real responses. Use absolute <code>http(s)</code> URLs or
+    relative paths like <code>/healthz</code> for internal app testing.
+  </p>
+</section>
+
+<section class="lms-section">
+  <h2>Request Builder</h2>
+  <div class="lms-grid cols-2">
+    <article class="lms-card">
+      <div class="row g-2">
+        <div class="col-md-4">
+          <label class="form-label">Method</label>
+          <select id="apiMethod" class="form-select">
+            <option>GET</option>
+            <option>POST</option>
+            <option>PUT</option>
+            <option>PATCH</option>
+            <option>DELETE</option>
+            <option>OPTIONS</option>
+            <option>HEAD</option>
+          </select>
+        </div>
+        <div class="col-md-8">
+          <label class="form-label">URL</label>
+          <input id="apiUrl" class="form-control" value="/healthz" placeholder="https://api.example.com/resource" />
+        </div>
+      </div>
+
+      <div class="row g-2 mt-1">
+        <div class="col-md-12">
+          <label class="form-label">Headers (JSON)</label>
+          <textarea id="apiHeaders" class="api-input">{}</textarea>
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Body (JSON or text)</label>
+          <textarea id="apiBody" class="api-input" placeholder='{"sample":"value"}'></textarea>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Timeout (ms)</label>
+          <input id="apiTimeout" type="number" class="form-control" value="5000" min="500" max="10000" />
+        </div>
+      </div>
+
+      <div class="lms-actions mt-3">
+        <button id="sendApiBtn" type="button" class="lms-btn primary">
+          <i class="las la-paper-plane"></i> Send Request
+        </button>
+      </div>
+    </article>
+
+    <article class="lms-card">
+      <h4>Response</h4>
+      <div id="apiMeta" class="api-meta">
+        <span class="status-chip">Status: --</span>
+        <span class="status-chip">Time: --</span>
+      </div>
+      <pre id="apiResponse" class="api-output">Send a request to view response...</pre>
+    </article>
+  </div>
+</section>
+
+<script>
+  (function () {
+    const sendButton = document.getElementById("sendApiBtn");
+    const methodEl = document.getElementById("apiMethod");
+    const urlEl = document.getElementById("apiUrl");
+    const headersEl = document.getElementById("apiHeaders");
+    const bodyEl = document.getElementById("apiBody");
+    const timeoutEl = document.getElementById("apiTimeout");
+    const responseEl = document.getElementById("apiResponse");
+    const metaEl = document.getElementById("apiMeta");
+
+    if (!sendButton || !methodEl || !urlEl || !headersEl || !bodyEl || !timeoutEl || !responseEl || !metaEl) {
+      return;
+    }
+
+    const setMeta = (status, time) => {
+      metaEl.innerHTML = `
+        <span class="status-chip">Status: ${status}</span>
+        <span class="status-chip">Time: ${time}</span>
+      `;
+    };
+
+    sendButton.addEventListener("click", async () => {
+      sendButton.disabled = true;
+      sendButton.innerHTML = '<i class="las la-spinner la-spin"></i> Sending...';
+      setMeta("--", "--");
+      responseEl.textContent = "Sending request...";
+
+      try {
+        const payload = {
+          method: methodEl.value,
+          url: urlEl.value,
+          headers: headersEl.value,
+          body: bodyEl.value,
+          timeoutMs: Number(timeoutEl.value),
+        };
+
+        const response = await fetch("/user/api-sandbox/request", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await response.json();
+        if (!response.ok || !data.success) {
+          setMeta(response.status, "--");
+          responseEl.textContent = data.error || "Sandbox request failed.";
+          return;
+        }
+
+        setMeta(
+          `${data.response.status} ${data.response.statusText || ""}`.trim(),
+          `${data.response.durationMs}ms`
+        );
+
+        responseEl.textContent = JSON.stringify(
+          {
+            request: data.request,
+            response: data.response,
+          },
+          null,
+          2
+        );
+      } catch (error) {
+        setMeta("Error", "--");
+        responseEl.textContent = error.message || "Request failed.";
+      } finally {
+        sendButton.disabled = false;
+        sendButton.innerHTML = '<i class="las la-paper-plane"></i> Send Request';
+      }
+    });
+  })();
+</script>
+
+<%- include("../partials/lms-layout-end") %>

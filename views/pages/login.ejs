@@ -1,0 +1,72 @@
+<%- include("../partials/header", { pageTitle: "Login - Gola" }) %>
+<%- include("../partials/page-shell-start", { activePage: "login" }) %>
+
+<section class="hero-section page-section scroll-to-page" id="login-hero">
+  <div class="custom-container">
+    <div class="hero-content content-width">
+      <div class="page-intro">
+        <span class="eyebrow scroll-animation" data-animation="fade_from_bottom">Authentication</span>
+        <h1 class="scroll-animation" data-animation="fade_from_bottom">Sign in to continue</h1>
+        <p class="scroll-animation" data-animation="fade_from_bottom">
+          Use your local account or Google (when configured). Verified email is required for local accounts.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-area page-section scroll-to-page" id="login-form">
+  <div class="custom-container">
+    <div class="contact-content content-width">
+      <div class="row justify-content-center">
+        <div class="col-lg-7">
+          <div class="auth-panel scroll-animation" data-animation="fade_from_bottom">
+            <h3 class="mb-3">Login</h3>
+
+            <% if (error && error.length) { %>
+              <div class="alert alert-danger">
+                <% error.forEach(function(msg) { %>
+                  <div><%= msg %></div>
+                <% }); %>
+              </div>
+            <% } %>
+
+            <% if (success && success.length) { %>
+              <div class="alert alert-success">
+                <% success.forEach(function(msg) { %>
+                  <div><%= msg %></div>
+                <% }); %>
+              </div>
+            <% } %>
+
+            <form method="POST" action="/user/login">
+              <div class="mb-3">
+                <label for="identifier" class="form-label">Email or Username</label>
+                <input id="identifier" name="identifier" class="form-control" required />
+              </div>
+              <div class="mb-4">
+                <label for="password" class="form-label">Password</label>
+                <input id="password" name="password" type="password" class="form-control" required />
+              </div>
+              <button class="theme-btn w-100" type="submit"><i class="las la-sign-in-alt"></i> Login</button>
+            </form>
+
+            <% if (googleAuthEnabled) { %>
+              <div class="mt-3">
+                <a class="theme-btn w-100 text-center" href="/user/auth/google">
+                  <i class="lab la-google"></i> Continue with Google
+                </a>
+              </div>
+            <% } %>
+
+            <p class="mt-4 mb-0 text-center">
+              No account yet? <a href="/user/register">Create one</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include("../partials/page-shell-end") %>

@@ -1,0 +1,36 @@
+      </main>
+    </div>
+
+    <script>
+      (function () {
+        const sidebar = document.getElementById("lmsSidebar");
+        const overlay = document.getElementById("lmsOverlay");
+        const toggle = document.getElementById("lmsMenuToggle");
+
+        if (!sidebar || !overlay || !toggle) {
+          return;
+        }
+
+        const closeMenu = () => {
+          sidebar.classList.remove("open");
+          overlay.classList.remove("show");
+        };
+
+        const openMenu = () => {
+          sidebar.classList.add("open");
+          overlay.classList.add("show");
+        };
+
+        toggle.addEventListener("click", () => {
+          if (sidebar.classList.contains("open")) {
+            closeMenu();
+            return;
+          }
+          openMenu();
+        });
+
+        overlay.addEventListener("click", closeMenu);
+      })();
+    </script>
+  </body>
+</html>

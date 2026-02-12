@@ -78,17 +78,39 @@ const sendBirthdayEmail = async (email, username) => {
 //Email to send verification email to user
 const sendVerificationEmail = async (token, email, username) => {
   try {
+    if (
+      !process.env.MAIL_USERNAME ||
+      !process.env.MAIL_PASSWORD ||
+      !process.env.MAIL_SERVER ||
+      !process.env.DEFAULT_SENDER
+    ) {
+      console.warn(
+        "[email] verification email not sent: mail transport environment variables are missing."
+      );
+      return;
+    }
+
+    const appBaseUrl =
+      process.env.APP_BASE_URL || `http://localhost:${process.env.PORT || 3000}`;
+    const verifyUrl = `${appBaseUrl}/user/verify-email/${token}`;
+
     const templatePath = path.join(
       __dirname,
       "../views/emails/emailActivate.ejs"
     );
-    const html = await ejs.renderFile(templatePath, { token, username });
+    const html = await ejs.renderFile(templatePath, {
+      token,
+      username,
+      verifyUrl,
+      appBaseUrl,
+    });
 
     await transporter.sendMail({
       from: process.env.DEFAULT_SENDER,
       to: email,
       subject: "🚀 Activate your account",
       html: html,
+      text: `Hi ${username || "there"}, verify your email: ${verifyUrl}`,
     });
   } catch (error) {
     console.error("Error verifying email:", error);
